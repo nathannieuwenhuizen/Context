@@ -13,8 +13,17 @@ public class SessionManager : MonoBehaviour
 
     [Header("Ober menu objects")]
     [SerializeField] private Transform oberPos;
+    [SerializeField] private float OberPadding = 3f;
+    [SerializeField] private float OberSpeed = 3f;
+
+    [SerializeField] private DialogueManager dialogueManager;
+
+    [SerializeField] private GameObject[] screens;
+    [SerializeField] private GameObject oberSelection;
+    [SerializeField] private GameObject chosenOber;
+
+    private Transform[] obers;
     private int currentPos;
-    private int maxPos = 1;
 
 
     private int progressionState = 0;
@@ -29,8 +38,13 @@ public class SessionManager : MonoBehaviour
             nameFields[i].text = "person " + (i + 1);
         }
 
+        chosenOber.SetActive(false);
+
         UpdateNameFields();
         amountDropDown.onValueChanged.AddListener(delegate { UpdateNameFields(); } );
+
+        ShowScreen(0);
+        SetupOber();
     }
     private void UpdateNameFields()
     {
@@ -56,27 +70,83 @@ public class SessionManager : MonoBehaviour
     }
     private void SetupOber()
     {
-        //GameObject
+        obers = oberPos.GetComponentsInChildren<Transform>();
+        
+        for (int i = 1; i < obers.Length; i++)
+        {
+            obers[i].position = new Vector3( OberPadding * (i - 1), obers[i].position.y, 0);
+        }
     }
-
-    private IEnumerator MoveOber( bool right)
+    public void MoveOber(bool right)
     {
-        yield return new WaitForFixedUpdate();
+        Debug.Log(currentPos);
+        currentPos += (right ? 1 : -1);
+        if (currentPos < 0)
+        {
+            currentPos = obers.Length - 2;
+        } else if (currentPos > obers.Length - 2)
+        {
+            currentPos = 0;
+        }
+
+        StopAllCoroutines();
+
+        StartCoroutine(MovingOber(right));
+    }
+    private IEnumerator MovingOber( bool right)
+    {
+        Vector3 newPos = oberPos.position;
+        newPos.x = -OberPadding * currentPos;
+
+        while (Mathf.Abs(oberPos.position.x - newPos.x) > 0.1f)
+        {
+            oberPos.position = Vector3.Lerp(oberPos.position, newPos, Time.deltaTime * OberSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+
     }
 
     public void Progress()
     {
+        if (dialogueManager.InDialogue)
+        {
+            return;
+        }
+
         progressionState++;
         switch (progressionState)
         {
             case 1:
                 ApplyNames();
+                dialogueManager.StartDialogue(DialogueData.ChooseHost, false, null);
+                ShowScreen(1);
                 break;
             case 2:
+                ShowScreen(-1);
+                chosenOber.SetActive(true);
+                dialogueManager.StartDialogue(DialogueData.IntroductionHost, false, () => ShowScreen(2));
+                break;
+            case 3:
+                ShowScreen(-1);
+                dialogueManager.StartDialogue(DialogueData.BeginTheRound, false, () => Debug.Log("end"));
                 break;
             default:
                 break;
         }
+    }
+    public void ShowScreen(int index)
+    {
+        foreach(GameObject screen in screens)
+        {
+            screen.SetActive(false);
+        }
+        if (index != -1)
+        {
+            screens[index].SetActive(true);
+        }
+
+        oberSelection.SetActive(index == 1);
+        
     }
     
     public class Session
