@@ -19,7 +19,7 @@ public class DialogueData {
     public static string UI = "Info";
 
     /// <summary>
-    /// Tutorial dialogue-----------------------------------------
+    /// session dialogue-----------------------------------------
     /// </summary>
     public static DialogueStruct[] ChooseHost = new DialogueStruct[]
     {
@@ -40,6 +40,44 @@ public class DialogueData {
 
 
     /// <summary>
-    /// Mainworld dialogue-----------------------------------------
+    /// round dialogue-----------------------------------------
     /// </summary>
+    public static DialogueStruct[] RoundIs = new DialogueStruct[]
+    {
+        new DialogueStruct(Ober, "This is the discussion of this round.", false),
+        new DialogueStruct(Ober, "Now each of you will write their opinion in turn.", false),
+        //new DialogueStruct(Ober, "Then we'll bring all those anwsers back and you get " + SessionData.CSESSION.timePerRound + " minutes to finalize the answer of the group.", false),
+        new DialogueStruct(Ober, "Are you all ready?", false),
+    };
+    public static DialogueStruct[] AfterAnswers = new DialogueStruct[]
+    {
+        new DialogueStruct(Ober, "Now comes the answers you've filled in to the screen.", false),
+        new DialogueStruct(Ober, "When that happens, the timer will start counting", false),
+        new DialogueStruct(Ober, "Good luck!", false),
+    };
+    public static DialogueStruct[] AfterRoundWin = new DialogueStruct[]
+        {
+        new DialogueStruct(Ober, "You all got a final answer! Great!", false),
+        new DialogueStruct(Ober, "Would you like to play another round?", false),
+    };
+    public static DialogueStruct[] AfterRoundLose = new DialogueStruct[]
+        {
+        new DialogueStruct(Ober, "You didn't ogt it in time...", false),
+        new DialogueStruct(Ober, "Aw...", false),
+        new DialogueStruct(Ober, "Wanna try again?", false),
+    };
+
+    public static DialogueStruct[] NewRoundChosen = new DialogueStruct[]
+        {
+        new DialogueStruct(Ober, "Awesome!", false),
+        new DialogueStruct(Ober, "Here comes the next round.", false),
+    };
+
+    public static DialogueStruct[] EndOfSession = new DialogueStruct[]
+        {
+        new DialogueStruct(Ober, "Have a great day!", false),
+    };
+
+
+
 }

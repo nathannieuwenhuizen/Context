@@ -18,10 +18,6 @@ public class DialogueManager : MonoBehaviour {
 
     public delegate void CallbackDelegate();
 
-    void Start()
-    {
-        //StartDialogue(DialogueData.ChooseHost, false, () => { Debug.Log("done!");  });
-    }
     void Update()
     {
         if (inDialogue)
@@ -60,7 +56,7 @@ public class DialogueManager : MonoBehaviour {
                 Debug.Log("next line!");
                 StartCoroutine(WritingLine(dialogue[i].line));
                 Debug.Log(i + " | " + (dialogue.Length - 1));
-                if (i == (dialogue.Length - 1))
+                if (i == (dialogue.Length - 1)  && !disapearWhenFinish)
                 {
                     if (callBack != null)
                     {
@@ -72,6 +68,10 @@ public class DialogueManager : MonoBehaviour {
                     yield return new WaitForFixedUpdate();
             }
             inDialogue = false;
+        }
+        if (callBack != null && disapearWhenFinish)
+        {
+            callBack();
         }
         UIObject.SetActive(!disapearWhenFinish);
     }

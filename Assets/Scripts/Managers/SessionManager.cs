@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SessionManager : MonoBehaviour
@@ -15,12 +16,15 @@ public class SessionManager : MonoBehaviour
     [SerializeField] private Transform oberPos;
     [SerializeField] private float OberPadding = 3f;
     [SerializeField] private float OberSpeed = 3f;
-
-    [SerializeField] private DialogueManager dialogueManager;
-
-    [SerializeField] private GameObject[] screens;
     [SerializeField] private GameObject oberSelection;
     [SerializeField] private GameObject chosenOber;
+
+    [Header("Time menu objects")]
+    [SerializeField] private TimeField timeField;
+
+    [Header("other")]
+    [SerializeField] private DialogueManager dialogueManager;
+    [SerializeField] private GameObject[] screens;
 
     private Transform[] obers;
     private int currentPos;
@@ -128,7 +132,11 @@ public class SessionManager : MonoBehaviour
                 break;
             case 3:
                 ShowScreen(-1);
-                dialogueManager.StartDialogue(DialogueData.BeginTheRound, false, () => Debug.Log("end"));
+                cSession.timePerRound = timeField.NumVal;
+                dialogueManager.StartDialogue(DialogueData.BeginTheRound, false, null);
+                break;
+            case 4:
+                EndOfScene();
                 break;
             default:
                 break;
@@ -148,11 +156,10 @@ public class SessionManager : MonoBehaviour
         oberSelection.SetActive(index == 1);
         
     }
-    
-    public class Session
+    public void EndOfScene()
     {
-        public List<string> players; //how many players it will be
-        public int timePerRound = 60; // in sec
-        public int character; // the ober/waitress
+        Debug.Log(cSession);
+        SessionData.CSESSION = cSession;
+        SceneManager.LoadScene(1);
     }
 }

@@ -2,6 +2,9 @@
 
 public static class CardData
 {
+
+    public static string testDiscussion = "Artiesten die vrouw-onvriendelijke uitspraken doen moeten worden geboycot";
+
     public static List<string> timeTexts = new List<string> {
     "",
     "",

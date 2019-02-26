@@ -7,6 +7,7 @@ public class TimeField : MonoBehaviour
 {
     [SerializeField] private GameObject minText;
     private InputField field;
+    private int numVal = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,23 +21,22 @@ public class TimeField : MonoBehaviour
     {
         string val = field.text;
         //if its a number
-        int num;
-        if (int.TryParse(val, out num))
+        
+        if (int.TryParse(val, out numVal))
         {
-            num = Mathf.Clamp(num, 1, 60);
-            field.text = num.ToString();
-            Debug.Log(num);
+            numVal = Mathf.Clamp(numVal, 1, 60);
+            field.text = numVal.ToString();
+            Debug.Log(numVal);
         } else if (val != "")
         {
-            field.text = "1";
+            numVal = 1;
+            field.text = numVal.ToString();
         }
         minText.SetActive(field.text != "");
 
     }
-
-    // Update is called once per frame
-    void Update()
+    public int NumVal
     {
-        
+        get { return numVal; }
     }
 }
