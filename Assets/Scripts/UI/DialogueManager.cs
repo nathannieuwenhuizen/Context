@@ -53,9 +53,9 @@ public class DialogueManager : MonoBehaviour {
                 }
 
                 characterText.text = dialogue[i].name;
-                Debug.Log("next line!");
+                //Debug.Log("next line!");
                 StartCoroutine(WritingLine(dialogue[i].line));
-                Debug.Log(i + " | " + (dialogue.Length - 1));
+                //Debug.Log(i + " | " + (dialogue.Length - 1));
                 if (i == (dialogue.Length - 1)  && !disapearWhenFinish)
                 {
                     if (callBack != null)

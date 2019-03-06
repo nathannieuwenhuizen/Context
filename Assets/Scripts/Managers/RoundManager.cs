@@ -12,6 +12,8 @@ public class RoundManager : MonoBehaviour
     [Header("general objects")]
     [SerializeField] GameObject nextButton;
     [SerializeField] Text stellingObject;
+    [SerializeField] GameObject opinionBubble;
+    List<GameObject> bubbles;
 
     [Header("dialogue")]
     [SerializeField] private DialogueManager dialogueManager;
@@ -57,6 +59,7 @@ public class RoundManager : MonoBehaviour
 
         dialogueManager.StartDialogue(DialogueData.RoundIs, false, null);
         //SessionData.CSESSION = new Session();
+        //StartCoroutine(SpawnOpinionBubbles());
     }
 
     public void NextButtonClicked()
@@ -103,6 +106,7 @@ public class RoundManager : MonoBehaviour
             case 3:
                 //hide final answer screen
                 allAnswerScreen.SetActive(false);
+                hideBubbles();
 
                 //show ober
                 oberObject.SetActive(true);
@@ -140,6 +144,7 @@ public class RoundManager : MonoBehaviour
         finallStellingText.text = CardData.testDiscussion;
 
         inFinalAnswerMode = true;
+
         //set timer
         timer.TimeCount = SessionData.CSESSION.timePerRound * 60; //min to sec
         timer.IsRunning = true;
@@ -147,15 +152,49 @@ public class RoundManager : MonoBehaviour
 
         //all answers are showing
         allAnswerScreen.SetActive(true);
+        /*
         string allAnsers = "";
         for (int i = 0; i < cRound.answers.Count; i++)
         {
             allAnsers += cRound.answers[i] + "\n";
         }
-        allAnswersField.text = allAnsers;
+        allAnswersField.text = allAnsers;*/
 
         //hide ober
         oberObject.SetActive(false);
+        StartCoroutine(SpawnOpinionBubbles());
+
+    }
+
+    public IEnumerator SpawnOpinionBubbles()
+    {
+        bubbles = new List<GameObject> { };
+        List<string> allAnswers = cRound.answers;
+        //List<string> allAnswers = new List<string> { "a", "b", "c", "d"};
+        Debug.Log("nani?");
+        while (allAnswers.Count > 0)
+        {
+            int randomVal = (int)Mathf.Floor(Random.value * allAnswers.Count);
+            Debug.Log("nani?" + randomVal);
+
+            GameObject tmpBubble = GameObject.Instantiate(opinionBubble, new Vector2(-4f, 0), Quaternion.identity);
+
+            bubbles.Add(tmpBubble);
+
+            yield return new WaitForSeconds(0.01f);
+            tmpBubble.GetComponent<Bubble>().SetupText(allAnswers[randomVal]); //must be later because of instantiation of the ui text :(
+
+            yield return new WaitForSeconds(0.5f);
+            allAnswers.RemoveAt(randomVal);
+
+        }
+    }
+    public void hideBubbles()
+    {
+        foreach (GameObject bubble in bubbles)
+        {
+            bubble.GetComponent<Bubble>().SetActive(false);
+        }
     }
 
     //check timer

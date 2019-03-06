@@ -127,7 +127,11 @@ public class SessionManager : MonoBehaviour
                 break;
             case 2:
                 ShowScreen(-1);
+                cSession.character = currentPos;
+
                 chosenOber.SetActive(true);
+                chosenOber.GetComponent<Ober>().UpdateSprite(cSession.character);
+
                 dialogueManager.StartDialogue(DialogueData.IntroductionHost, false, () => ShowScreen(2));
                 break;
             case 3:
