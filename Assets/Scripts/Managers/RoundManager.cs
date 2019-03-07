@@ -48,17 +48,16 @@ public class RoundManager : MonoBehaviour
     private bool newRound;
 
 
-
     void Start()
     {
         cRound = new Round();
         cRound.answers = new List<string> { };
 
         stellingObject.gameObject.SetActive(true);
-        stellingObject.text = CardData.testDiscussion;
+        stellingObject.text = "";
 
-        dialogueManager.StartDialogue(DialogueData.RoundIs, false, null);
-        //SessionData.CSESSION = new Session();
+        dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[0].begin + CardData.stories[0].question), false, null);
+        SessionData.CSESSION = new Session();
         //StartCoroutine(SpawnOpinionBubbles());
     }
 
@@ -84,16 +83,20 @@ public class RoundManager : MonoBehaviour
         switch (progressState)
         {
             case 1:
+                //players fill in their answers----------------
+
                 //personal mode is activated
                 inPersonalAnswerMode = true;
 
                 stellingObject.gameObject.SetActive(false);
-                personalStellingText.text = CardData.testDiscussion;
+                personalStellingText.text = CardData.stories[0].question;
 
                 dialogueObject.SetActive(false);
                 PersonToAnswer();
                 break;
             case 2:
+                //ober talks and shows bubbles of opinions--------
+
                 //hide personal answer screen
                 personalAnswerScreen.SetActive(false);
 
@@ -112,7 +115,7 @@ public class RoundManager : MonoBehaviour
                 oberObject.SetActive(true);
 
                 //after final round
-                dialogueManager.StartDialogue(timesUp ? DialogueData.AfterRoundLose : DialogueData.AfterRoundWin, false, () => {
+                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(DialogueData.getRandomAnswerResponse() + CardData.stories[0].punchline + ". Wil je nog een ronde spelen?"), false, () => {
                     chooseScreen.SetActive(true);
                     nextButton.SetActive(false);
                 });
@@ -141,7 +144,7 @@ public class RoundManager : MonoBehaviour
 
     public void SetTimerAndScreenReady ()
     {
-        finallStellingText.text = CardData.testDiscussion;
+        finallStellingText.text = "";
 
         inFinalAnswerMode = true;
 

@@ -49,6 +49,8 @@ public class SessionManager : MonoBehaviour
 
         ShowScreen(0);
         SetupOber();
+
+        Debug.Log(WholeLineToSepereateLines("sdfdfghnderftghgfdsdfgg. sdfghj. dfghj.")[0]);
     }
     private void UpdateNameFields()
     {
@@ -166,4 +168,10 @@ public class SessionManager : MonoBehaviour
         SessionData.CSESSION = cSession;
         SceneManager.LoadScene(1);
     }
+
+    public string[] WholeLineToSepereateLines(string val)
+    {
+        return val.Split(new string[] { ". " }, System.StringSplitOptions.None);
+    }
+
 }

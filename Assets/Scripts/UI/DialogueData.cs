@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public struct DialogueStruct
 {
@@ -78,6 +79,34 @@ public class DialogueData {
         new DialogueStruct(Ober, "Have a great day!", false),
     };
 
+    public static DialogueStruct[] getDialogueFromString(string val)
+    {
+        string[] lines = WholeLineToSepereateLines(val);
+
+        DialogueStruct[] result = new DialogueStruct[lines.Length];
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = new DialogueStruct(Ober, lines[i], false);
+        }
+        return result;
+    }
+    public static string[] WholeLineToSepereateLines(string val)
+    {
+        return val.Split(new string[] { ". " }, System.StringSplitOptions.None);
+    }
+
+    public static string getRandomAnswerResponse()
+    {
+        List<string> vals = new List<string>
+        {
+            "Zo! Dat is best een interesant antwoord.... ",
+            "Mooi antwoord. ",
+            "Goed beantwoord!. ",
+            "Jullie antwoord zet me op denken. ",
+            "Aha, jullie zijn eruit gekomen, goed gedaan!.  ",
+        };
+        return vals[Random.Range(0, vals.Count- 1)];
+    }
 
 
 }
