@@ -13,7 +13,7 @@ public class Dragging : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
     }
     
     private IEnumerator getVelocity()
@@ -54,12 +54,12 @@ public class Dragging : MonoBehaviour
                                              0.0f);
             
 
-            rb.velocity = Vector3.zero;
+            /*rb.velocity = Vector3.zero;
             if (!Input.GetButton("Fire1"))
             {
                 beingDragged = false;
                 rb.AddForce(dif * 2000);
-            }
+            }*/
         }
     }
 }
