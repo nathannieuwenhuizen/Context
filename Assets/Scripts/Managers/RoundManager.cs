@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class RoundManager : MonoBehaviour
 {
     //what the round is
@@ -15,7 +14,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] GameObject nextButton;
     [SerializeField] Text stellingObject;
     [SerializeField] GameObject opinionBubble;
-    List<GameObject> bubbles;
+    private List<Bubble> bubbles;
 
     [Header("dialogue")]
     [SerializeField] private DialogueManager dialogueManager;
@@ -39,7 +38,6 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private CountDownTimer timer;
     [SerializeField] private GameObject allAnswerScreen;
     [SerializeField] private Text allAnswersField;
-    [SerializeField] private InputField finalAnswerField;
     [SerializeField] private Text finallStellingText;
     [SerializeField] private ParticleSystem bubbleParticle;
 
@@ -60,12 +58,13 @@ public class RoundManager : MonoBehaviour
 
         stellingObject.gameObject.SetActive(true);
         stellingObject.text = "";
+        bubbleParticle.enableEmission = false;
+
 
         dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[cRound.stelling].begin + CardData.stories[cRound.stelling].question), false, null);
-        SessionData.CSESSION = new Session();
+        //SessionData.CSESSION = new Session();
 
-        bubbleParticle.enableEmission = false;
-        StartCoroutine(SpawnOpinionBubbles());
+        //StartCoroutine(SpawnOpinionBubbles());
 
     }
 
@@ -145,7 +144,7 @@ public class RoundManager : MonoBehaviour
         Debug.Log("personal should be active");
         //personal answer screen is visible and the values reset and update for gthe person based on index
         personalAnswerScreen.SetActive(true);
-        personText.text = SessionData.CSESSION.players[answerIndex] + "'s opinion...";
+        personText.text = SessionData.CSESSION.players[answerIndex].name + "'s opinion...";
         personalAnswerField.text = "";
 
         //hide ober
@@ -182,9 +181,17 @@ public class RoundManager : MonoBehaviour
     public IEnumerator SpawnOpinionBubbles()
     {
         bubbleParticle.enableEmission = true;
-        bubbles = new List<GameObject> { };
-        //List<string> allAnswers = cRound.answers;
-        List<string> allAnswers = new List<string> { "a", "b", "c", "d", "e", "f"};
+        bubbles = new List<Bubble> { };
+        List<string> allAnswers = cRound.answers;
+        //List<string> allAnswers = new List<string> { "a", "b", "c", "d", "e", "f"};
+        List<int> playerIndexes = new List<int> { };
+        for (int i = 0; i < allAnswers.Count; i++)
+        {
+            playerIndexes.Add(i);
+        }
+        playerIndexes = RoundManager.Randomize(playerIndexes);
+
+
         List<Vector2> positions = new List<Vector2>
         {
             new Vector2(-1.2f,2.5f),
@@ -194,21 +201,21 @@ public class RoundManager : MonoBehaviour
             new Vector2(-1.2f,-2.5f),
             new Vector2(1.2f,-2.2f),
         };
-        while (allAnswers.Count > 0)
+        for (int i = 0; i < playerIndexes.Count; i++)
         {
-            int randomVal = (int)Mathf.Floor(Random.value * allAnswers.Count);
+            Debug.Log(playerIndexes[ i]);
 
             GameObject tmpBubble = GameObject.Instantiate(opinionBubble, new Vector2(-4f, 0), Quaternion.identity);
 
-            bubbles.Add(tmpBubble);
-            tmpBubble.GetComponent<Bubble>().goToPos(positions[0]);
-            positions.RemoveAt(0);
+            bubbles.Add(tmpBubble.GetComponent<Bubble>());
+            tmpBubble.GetComponent<Bubble>().goToPos(positions[i]);
 
             yield return new WaitForSeconds(0.01f);
-            tmpBubble.GetComponent<Bubble>().SetupText(allAnswers[randomVal]); //must be later because of instantiation of the ui text :(
+            tmpBubble.GetComponent<Bubble>().Text = allAnswers[playerIndexes[i]]; //must be later because of instantiation of the ui text :(
+            tmpBubble.GetComponent<Bubble>().FromPlayer = playerIndexes[i];
+            tmpBubble.GetComponent<Bubble>().DisplayCrown(SessionData.HasHighestScore(playerIndexes[i]));
 
             yield return new WaitForSeconds(0.5f);
-            allAnswers.RemoveAt(randomVal);
 
         }
         bubbleParticle.enableEmission = false;
@@ -216,9 +223,9 @@ public class RoundManager : MonoBehaviour
     }
     public void hideBubbles()
     {
-        foreach (GameObject bubble in bubbles)
+        foreach (Bubble bubble in bubbles)
         {
-            bubble.GetComponent<Bubble>().SetActive(false);
+            bubble.SetActive(false);
         }
     }
 
@@ -253,12 +260,17 @@ public class RoundManager : MonoBehaviour
     }
     public void FinalAnswered()
     {
-        Debug.Log("final answer" + finalAnswerField.text);
-        //check if the field isnt empty
-        if (finalAnswerField.text == "") { return; }
+        Bubble chosenBubble = ChosenBubble();
+        if (chosenBubble == null) { return; }
 
         //update
-        cRound.finalAnswer = finalAnswerField.text;
+        cRound.finalAnswer = chosenBubble.Text;
+
+        //winner gets a point
+        Player winner = SessionData.CSESSION.players[chosenBubble.FromPlayer];
+        winner.score += 1;
+        SessionData.CSESSION.players[chosenBubble.FromPlayer] = winner;
+
         inFinalAnswerMode = false;
         NextButtonClicked();
 
@@ -283,5 +295,29 @@ public class RoundManager : MonoBehaviour
     {
         public int type;
         public string content;
+    }
+    public static List<T> Randomize<T>(List<T> list)
+    {
+        List<T> randomizedList = new List<T>();
+        System.Random rnd = new System.Random();
+        
+        while (list.Count > 0)
+        {
+            int index = rnd.Next(0, list.Count); //pick a random item from the master list
+            randomizedList.Add(list[index]); //place it at the end of the randomized list
+            list.RemoveAt(index);
+        }
+        return randomizedList;
+    }
+    public Bubble ChosenBubble()
+    {
+        foreach (Bubble bubble in bubbles)
+        {
+            if (bubble.Clicked)
+            {
+                return bubble;
+            }
+        }
+        return null;
     }
 }

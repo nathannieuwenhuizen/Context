@@ -62,12 +62,12 @@ public class SessionManager : MonoBehaviour
     }
     private void ApplyNames()
     {
-        cSession.players = new List<string> { };
+        cSession.players = new List<Player> { };
         for (int i = 0; i < nameFields.Length; i++)
         {
             if (i < amountDropDown.value + 2)
             {
-                cSession.players.Add(nameFields[i].text);
+                cSession.players.Add(new Player(nameFields[i].text, 0));
             } else {
                 break;
             }
