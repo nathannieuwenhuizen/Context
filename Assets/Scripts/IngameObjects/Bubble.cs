@@ -19,6 +19,7 @@ public class Bubble : MonoBehaviour
     //color
     private SpriteRenderer sr;
     private bool clicked = false;
+    private AudioSource audios;
 
     //vals
     private int fromPlayer = -1;
@@ -28,12 +29,15 @@ public class Bubble : MonoBehaviour
         canvas = GameObject.FindObjectOfType<Canvas>();
 
         sr = GetComponent<SpriteRenderer>();
+        audios = GetComponent<AudioSource>();
 
         InstantiatedText = GameObject.Instantiate(UIText);
         InstantiatedText.GetComponent<UIFollowTarget>().Target = transform;
         InstantiatedText.GetComponent<UIFollowTarget>().canvas = canvas;
         InstantiatedText.transform.parent = canvas.gameObject.transform;
         InstantiatedText.transform.SetSiblingIndex(0);
+
+        audios.Play();
     }
     private void Update()
     {
@@ -110,6 +114,7 @@ public class Bubble : MonoBehaviour
     {
         get { return clicked; }
         set {
+            audios.Play();
             clicked = value;
             sr.color = new Color(clicked ? 0.5f : 1, 1, clicked ? 0.5f : 1);
             if (clicked)

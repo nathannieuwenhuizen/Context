@@ -13,8 +13,10 @@ public class RoundManager : MonoBehaviour
     [Header("general objects")]
     [SerializeField] GameObject nextButton;
     [SerializeField] Text stellingObject;
+    [SerializeField] private FadeScreen fadeScreen;
     [SerializeField] GameObject opinionBubble;
     private List<Bubble> bubbles;
+    private AudioSource audioS;
 
     [Header("dialogue")]
     [SerializeField] private DialogueManager dialogueManager;
@@ -52,6 +54,7 @@ public class RoundManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("start");
         cRound = new Round();
         cRound.stelling = (int)Mathf.Floor(Random.Range(0, CardData.stories.Count));
         cRound.answers = new List<string> { };
@@ -59,7 +62,7 @@ public class RoundManager : MonoBehaviour
         stellingObject.gameObject.SetActive(true);
         stellingObject.text = "";
         bubbleParticle.enableEmission = false;
-
+        audioS = GetComponent<AudioSource>();
 
         dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[cRound.stelling].begin + CardData.stories[cRound.stelling].question), false, null);
         //SessionData.CSESSION = new Session();
@@ -70,7 +73,9 @@ public class RoundManager : MonoBehaviour
 
     public void NextButtonClicked()
     {
-        if(inPersonalAnswerMode) {
+        Debug.Log(progressState);
+
+        if (inPersonalAnswerMode) {
             PersonAnswered();
             return;
         }
@@ -84,7 +89,8 @@ public class RoundManager : MonoBehaviour
         {
             return;
         }
-        
+
+        audioS.Play();
 
         progressState++;
         switch (progressState)
@@ -134,10 +140,17 @@ public class RoundManager : MonoBehaviour
                 chooseScreen.SetActive(false);
                 dialogueManager.StartDialogue(newRound ? DialogueData.NewRoundChosen : DialogueData.EndOfSession, true, () =>
                 {
-                    SceneManager.LoadScene(newRound ? 1 : 0);
+                    StartCoroutine( GoToScene(newRound ? 1 : 0));
                 });
                 break;
         }
+    }
+    private IEnumerator GoToScene(int val)
+    {
+        fadeScreen.FadeTo(1f, 0.5f);
+        yield return new WaitForSeconds(.5f);
+        SceneManager.LoadScene(val);
+
     }
     public void PersonToAnswer()
     {
@@ -146,6 +159,7 @@ public class RoundManager : MonoBehaviour
         personalAnswerScreen.SetActive(true);
         personText.text = SessionData.CSESSION.players[answerIndex].name + "'s opinion...";
         personalAnswerField.text = "";
+        Handheld.Vibrate();
 
         //hide ober
         oberObject.SetActive(false);
@@ -185,9 +199,9 @@ public class RoundManager : MonoBehaviour
         List<string> allAnswers = cRound.answers;
         //List<string> allAnswers = new List<string> { "a", "b", "c", "d", "e", "f"};
         List<int> playerIndexes = new List<int> { };
-        for (int i = 0; i < allAnswers.Count; i++)
+        for (int j = 0; j < allAnswers.Count; j++)
         {
-            playerIndexes.Add(i);
+            playerIndexes.Add(j);
         }
         playerIndexes = RoundManager.Randomize(playerIndexes);
 
@@ -203,7 +217,7 @@ public class RoundManager : MonoBehaviour
         };
         for (int i = 0; i < playerIndexes.Count; i++)
         {
-            Debug.Log(playerIndexes[ i]);
+            Debug.Log("index" + playerIndexes[ i]);
 
             GameObject tmpBubble = GameObject.Instantiate(opinionBubble, new Vector2(-4f, 0), Quaternion.identity);
 
@@ -216,7 +230,6 @@ public class RoundManager : MonoBehaviour
             tmpBubble.GetComponent<Bubble>().DisplayCrown(SessionData.HasHighestScore(playerIndexes[i]));
 
             yield return new WaitForSeconds(0.5f);
-
         }
         bubbleParticle.enableEmission = false;
 

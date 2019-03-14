@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 public class DialogueManager : MonoBehaviour {
 
     [SerializeField]
-    private Text dialogueText;
-    [SerializeField]
-    private Text characterText;
+    private TextMeshProUGUI mesh;
     [SerializeField]
     private GameObject UIObject;
     [SerializeField]
@@ -15,22 +14,35 @@ public class DialogueManager : MonoBehaviour {
     private bool isWriting = false;
     private bool inDialogue = false;
     private bool goToNextLine = false;
+    [SerializeField]
+    private Button button;
 
     public delegate void CallbackDelegate();
 
+    void Start()
+    {
+        UIObject.SetActive(false);
+    }
     void Update()
     {
         if (inDialogue)
         {
             if (Input.GetMouseButtonDown(0) == true)
             {
-                if (isWriting)
-                    isWriting = false;
-                else
-                    goToNextLine = true;
+                //if (OverButton()) {
+                    Progress();
+                //}
             }
         }
     }
+    public void Progress()
+    {
+        if (isWriting)
+            isWriting = false;
+        else
+            goToNextLine = true;
+    }
+    
     public void StartDialogue(DialogueStruct[] dialogue, bool disapearWhenFinish, System.Action callBack)
     {
         StartCoroutine(WritingDialogue(dialogue, disapearWhenFinish, callBack));
@@ -45,15 +57,14 @@ public class DialogueManager : MonoBehaviour {
             {
                 if (dialogue[i].allignmentRight)
                 {
-                    dialogueText.alignment = characterText.alignment = TextAnchor.UpperRight;
+                    //mesh.alignment = mesh.alignment =  TextAnchor.UpperRight;
                 }
                 else
                 {
-                    dialogueText.alignment = characterText.alignment = TextAnchor.UpperLeft;
+                    //dialogueText.alignment = characterText.alignment = TextAnchor.UpperLeft;
                 }
 
-                characterText.text = dialogue[i].name;
-                //Debug.Log("next line!");
+                //mesh.text = dialogue[i].name;
                 StartCoroutine(WritingLine(dialogue[i].line));
                 //Debug.Log(i + " | " + (dialogue.Length - 1));
                 if (i == (dialogue.Length - 1)  && !disapearWhenFinish)
@@ -78,22 +89,30 @@ public class DialogueManager : MonoBehaviour {
     IEnumerator WritingLine(string line)
     {
         isWriting = true;
-        dialogueText.text = "";
+        mesh.text = "";
+        //mesh.GetComponent<RectTransform>().position = new Vector2(mesh.GetComponent<RectTransform>().position.x, 0f);
+
         //writingSound.Play();
         for (int i = 0; i < line.Length; i++)
         {
             if(isWriting)
             {
-                dialogueText.text += line[i];
+                mesh.text += line[i];
                 yield return new WaitForSeconds(0.01f);
             }
             else
             {
-                dialogueText.text += line.Substring(i,line.Length-i);
+                mesh.text += line.Substring(i,line.Length-i);
                 break;
             }
         }
         isWriting = false;
+    }
+    public bool OverButton ()
+    {
+        Vector2 mouse = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
+        //Debug.Log(button.GetComponent<RectTransform>().rect.Contains(mouse));
+        return (button.GetComponent<RectTransform>().rect.Contains(mouse));
     }
     public bool InDialogue
     {

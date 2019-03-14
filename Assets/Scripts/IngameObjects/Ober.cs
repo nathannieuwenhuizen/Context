@@ -9,7 +9,6 @@ public class Ober : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Session: " + SessionData.CSESSION);
         if (SessionData.CSESSION != null)
         {
             Debug.Log("Session exists!");
@@ -21,5 +20,9 @@ public class Ober : MonoBehaviour
     public void UpdateSprite(int val) {
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = sprites[val];
+        if (val == 1)
+        {
+            transform.Translate(new Vector3(0, 1.82f, 0));
+        }
     }
 }

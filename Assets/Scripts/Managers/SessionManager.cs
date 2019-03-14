@@ -25,10 +25,13 @@ public class SessionManager : MonoBehaviour
     [Header("other")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private GameObject[] screens;
+    [SerializeField] private FadeScreen fadeScreen;
+    [SerializeField] private GameObject bg_music;
 
     private Transform[] obers;
     private int currentPos;
 
+    private AudioSource audioS;
 
     private int progressionState = 0;
     private Session cSession;
@@ -50,7 +53,11 @@ public class SessionManager : MonoBehaviour
         ShowScreen(0);
         SetupOber();
 
-        Debug.Log(WholeLineToSepereateLines("sdfdfghnderftghgfdsdfgg. sdfghj. dfghj.")[0]);
+        audioS = GetComponent<AudioSource>();
+        if (!GameObject.FindGameObjectWithTag("Music"))
+        {
+            Instantiate(bg_music);
+        }
     }
     private void UpdateNameFields()
     {
@@ -72,7 +79,6 @@ public class SessionManager : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(cSession.players[1]);
     }
     private void SetupOber()
     {
@@ -85,6 +91,7 @@ public class SessionManager : MonoBehaviour
     }
     public void MoveOber(bool right)
     {
+        audioS.Play();
         Debug.Log(currentPos);
         currentPos += (right ? 1 : -1);
         if (currentPos < 0)
@@ -119,6 +126,7 @@ public class SessionManager : MonoBehaviour
             return;
         }
 
+        audioS.Play();
         progressionState++;
         switch (progressionState)
         {
@@ -142,7 +150,7 @@ public class SessionManager : MonoBehaviour
                 dialogueManager.StartDialogue(DialogueData.BeginTheRound, false, null);
                 break;
             case 4:
-                EndOfScene();
+                StartCoroutine( EndOfScene() );
                 break;
             default:
                 break;
@@ -162,10 +170,12 @@ public class SessionManager : MonoBehaviour
         oberSelection.SetActive(index == 1);
         
     }
-    public void EndOfScene()
+    public IEnumerator EndOfScene()
     {
-        Debug.Log(cSession);
         SessionData.CSESSION = cSession;
+        fadeScreen.FadeTo(1f, 0.5f);
+
+        yield return new WaitForSeconds(.5f);
         SceneManager.LoadScene(1);
     }
 
