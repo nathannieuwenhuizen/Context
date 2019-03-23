@@ -27,6 +27,11 @@ public class SessionManager : MonoBehaviour
     [SerializeField] private GameObject[] screens;
     [SerializeField] private FadeScreen fadeScreen;
     [SerializeField] private GameObject bg_music;
+    [SerializeField] private GameObject nextButton;
+    [SerializeField] private GameObject BarTable;
+
+    [SerializeField] private GameObject OberHeader;
+    [SerializeField] private Text oberNameText;
 
     private Transform[] obers;
     private int currentPos;
@@ -53,6 +58,9 @@ public class SessionManager : MonoBehaviour
         ShowScreen(0);
         SetupOber();
 
+        nextButton.SetActive(false);
+        BarTable.SetActive(false);
+        OberHeader.SetActive(false);
         audioS = GetComponent<AudioSource>();
         if (!GameObject.FindGameObjectWithTag("Music"))
         {
@@ -101,6 +109,7 @@ public class SessionManager : MonoBehaviour
         {
             currentPos = 0;
         }
+        oberNameText.text = currentPos == 0 ? SessionData.Melissa : SessionData.John;
 
         StopAllCoroutines();
 
@@ -132,24 +141,23 @@ public class SessionManager : MonoBehaviour
         {
             case 1:
                 ApplyNames();
-                dialogueManager.StartDialogue(DialogueData.ChooseHost, false, null);
+                BarTable.SetActive(true);
+                OberHeader.SetActive(true);
+
                 ShowScreen(1);
                 break;
             case 2:
                 ShowScreen(-1);
+                nextButton.SetActive(true);
+
                 cSession.character = currentPos;
 
                 chosenOber.SetActive(true);
                 chosenOber.GetComponent<Ober>().UpdateSprite(cSession.character);
 
-                dialogueManager.StartDialogue(DialogueData.IntroductionHost, false, () => ShowScreen(2));
+                dialogueManager.StartDialogue(DialogueData.IntroductionHost, false, null);
                 break;
             case 3:
-                ShowScreen(-1);
-                cSession.timePerRound = timeField.NumVal;
-                dialogueManager.StartDialogue(DialogueData.BeginTheRound, false, null);
-                break;
-            case 4:
                 StartCoroutine( EndOfScene() );
                 break;
             default:

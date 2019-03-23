@@ -30,7 +30,7 @@ public class DialogueData {
     {
         new DialogueStruct(Ober, "Hello everybody, my name is " +  Ober + ", and I welcome you to...", false),
         new DialogueStruct(Ober, "Bluebell Cafe!", false),
-        new DialogueStruct(Ober, "Before we begin with your card game, would you please select how long each round would last?", false),
+        new DialogueStruct(Ober, "Let's begin the game!", false),
     };
 
     public static DialogueStruct[] BeginTheRound = new DialogueStruct[]

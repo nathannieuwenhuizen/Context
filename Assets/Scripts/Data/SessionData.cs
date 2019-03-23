@@ -6,6 +6,8 @@ public static class SessionData
 {
     public static Session CSESSION;
 
+    public static string Melissa = "M e l i s s a   -   3 0";
+    public static string John = "J o h n   -   2 8";
     public static bool HasHighestScore(int index)
     {
         int score = SessionData.CSESSION.players[index].score;
