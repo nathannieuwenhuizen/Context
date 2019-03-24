@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+
 public class DialogueManager : MonoBehaviour {
 
     [SerializeField]
@@ -14,8 +16,7 @@ public class DialogueManager : MonoBehaviour {
     private bool isWriting = false;
     private bool inDialogue = false;
     private bool goToNextLine = false;
-    [SerializeField]
-    private Button button;
+    [SerializeField] private GameObject button;
 
     public delegate void CallbackDelegate();
 
@@ -25,13 +26,21 @@ public class DialogueManager : MonoBehaviour {
     }
     void Update()
     {
+        if (Input.GetMouseButtonDown(0) == true)
+        {
+        }
+
         if (inDialogue)
         {
             if (Input.GetMouseButtonDown(0) == true)
             {
-                //if (OverButton()) {
-                    Progress();
-                //}
+
+                bool uiIsButton = EventSystem.current.currentSelectedGameObject == button;
+                Debug.Log(uiIsButton);
+
+                if (uiIsButton) {
+                Progress();
+                }
             }
         }
     }

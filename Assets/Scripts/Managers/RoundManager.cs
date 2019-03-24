@@ -21,6 +21,7 @@ public class RoundManager : MonoBehaviour
     [Header("dialogue")]
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private GameObject dialogueObject;
+    [SerializeField] private Text oberNameText;
 
 
     [Header("personal answer objects")]
@@ -54,7 +55,6 @@ public class RoundManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("start");
         cRound = new Round();
         cRound.stelling = (int)Mathf.Floor(Random.Range(0, CardData.stories.Count));
         cRound.answers = new List<string> { };
@@ -68,6 +68,8 @@ public class RoundManager : MonoBehaviour
         //SessionData.CSESSION = new Session();
 
         //StartCoroutine(SpawnOpinionBubbles());
+
+        oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
 
     }
 
@@ -104,7 +106,7 @@ public class RoundManager : MonoBehaviour
                 storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
                 stellingObject.gameObject.SetActive(false);
-                personalStellingText.text = CardData.stories[cRound.stelling].question;
+                personalStellingText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
                 dialogueObject.SetActive(false);
                 PersonToAnswer();
@@ -157,7 +159,7 @@ public class RoundManager : MonoBehaviour
         Debug.Log("personal should be active");
         //personal answer screen is visible and the values reset and update for gthe person based on index
         personalAnswerScreen.SetActive(true);
-        personText.text = SessionData.CSESSION.players[answerIndex].name + "'s opinion...";
+        personText.text = SessionData.CSESSION.players[answerIndex].name;
         personalAnswerField.text = "";
         Handheld.Vibrate();
 
