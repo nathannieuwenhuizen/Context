@@ -96,7 +96,7 @@ public class DialogueData {
 
     public static DialogueStruct[] EndOfSession = new DialogueStruct[]
         {
-        new DialogueStruct(Ober, "Ik wens jullie een fijne dag verder!", false),
+        new DialogueStruct(Ober, "Dank voor het spelen van Cafe Bluebell! Fijne dag nog toegewenst!", false),
     };
 
 

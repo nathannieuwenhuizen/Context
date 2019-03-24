@@ -29,6 +29,8 @@ public class SpinningBottle : MonoBehaviour
     {
         StopAllCoroutines();
         cspeed += speed;
+        Handheld.Vibrate();
+
         cspeed = Mathf.Min(cspeed, maxSpeed);
         StartCoroutine(SlowDown());
     }

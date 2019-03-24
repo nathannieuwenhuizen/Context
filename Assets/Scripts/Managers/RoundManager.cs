@@ -73,7 +73,6 @@ public class RoundManager : MonoBehaviour
         bubbleParticle.enableEmission = false;
         audioS = GetComponent<AudioSource>();
 
-        dialogueManager.StartDialogue(DialogueData.Round1Is, false, null);
         //SessionData.CSESSION = new Session();
 
         //StartCoroutine(SpawnOpinionBubbles());
@@ -81,8 +80,15 @@ public class RoundManager : MonoBehaviour
         oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
         storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
-    }
 
+        StartCoroutine(FirstDialogue());
+    }
+    public IEnumerator FirstDialogue()
+    {
+        yield return new WaitForSeconds(.2f);
+        dialogueManager.StartDialogue(DialogueData.Round1Is, false, null);
+
+    }
     public void NextButtonClicked()
     {
         Debug.Log(progressState);

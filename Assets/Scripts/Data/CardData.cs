@@ -13,11 +13,11 @@ public static class CardData
             "",
             ""),*/
         new Story(
-            "Een kennis van mij kwam laatst binnen en vertelde me dit zware verhaal. Hij heeft samen sex gehad met een meisje al wetend voorhand dat zij een SOA bezat. Ondanks dat hij veilig sex met haar heeft gehad ontving hij de soa en maakte dat hem woest tegenover haar. ",
-            "Wat vindt je van deze situatie?",
+            "Een kennis van mij kwam laatst binnen en vertelde me dit zware verhaal. Hij heeft samen sex gehad met een meisje al wetend voorhand dat zij een SOA bezat. Ondanks dat hij veilig sex met haar heeft gehad ontving hij de soa en maakte dat hem WOEST tegenover haar. ",
+            "Vind je zijn reactie normaal?",
             "",
             ""),
-        new Story(
+        /*new Story(
             "Ik kreeg laatst dit verhaal te horen van iemand. Hij vertelde dat hij al een tijdje in een relatie zat met zijn vriendin met regelmatig seksueel contact. Door een slechte ervaring hiervoor te hebben meegemaakt met iemand anders vertelde hij haar dat hij liever niet meer sex zou willen hebben. Haar manier hoe zij naar hem opkeek als “macho” zorgde ervoor dat ze niet openstond voor zijn keuze en verliet hem daarna. ",
             "Wat vindt je van deze situatie?",
             "",
@@ -35,7 +35,7 @@ public static class CardData
         new Story("Ik ken een persoon die vaak naar festival gaat en hij zei tegen mij het volgende. “Ik was naar een festival gegaan, en toen stond ik naar een band te kijken. en toen kwam er een wijf aan die aan me zat te twerken maar ik vond dat niet leuk. Dus ik probeerde plaats te maken door weg te stappen. Maar ze bleef me volgen..”. ", 
             "Wat zou je doen in deze situatie?",
             "Jullie hebben waarschijnlijk een beter antwoord dat wat hij deed. Namelijk, hij zij: Ik heb haar naar een moshpit geleid en  erin geduwd", 
-            "Is dit een hulplijn ofzo"),
+            "Is dit een hulplijn ofzo"),*/
     };
 
     public struct Story
