@@ -12,7 +12,6 @@ public class RoundManager : MonoBehaviour
 
     [Header("general objects")]
     [SerializeField] GameObject nextButton;
-    [SerializeField] Text stellingObject;
     [SerializeField] private FadeScreen fadeScreen;
     [SerializeField] GameObject opinionBubble;
     private List<Bubble> bubbles;
@@ -28,8 +27,20 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject personalAnswerScreen;
     [SerializeField] private Text personText;
     [SerializeField] private InputField personalAnswerField;
+    [SerializeField] private Slider personalAnswerSlider;
     [SerializeField] private Text personalStellingText;
     [SerializeField] private Text storyText;
+
+    [Header("Spinning bottle round")]
+    [SerializeField] private GameObject bottleScreen;
+    [SerializeField] private SpinningBottle spinningBottle;
+
+    [Header("Team final round")]
+    [SerializeField] private GameObject teamScreen;
+    [SerializeField] private Text teamEensNames;
+    [SerializeField] private Text teamOneensNames;
+    private float finalAnswer;
+
 
     [Header("Ober object")]
     [SerializeField] private GameObject oberObject;
@@ -51,25 +62,24 @@ public class RoundManager : MonoBehaviour
     [Header("choosing another round objects")]
     [SerializeField] private GameObject chooseScreen;
     private bool newRound;
-
+    
 
     void Start()
     {
         cRound = new Round();
         cRound.stelling = (int)Mathf.Floor(Random.Range(0, CardData.stories.Count));
-        cRound.answers = new List<string> { };
+        cRound.answers = new List<float> { };
 
-        stellingObject.gameObject.SetActive(true);
-        stellingObject.text = "";
         bubbleParticle.enableEmission = false;
         audioS = GetComponent<AudioSource>();
 
-        dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[cRound.stelling].begin + CardData.stories[cRound.stelling].question), false, null);
+        dialogueManager.StartDialogue(DialogueData.Round1Is, false, null);
         //SessionData.CSESSION = new Session();
 
         //StartCoroutine(SpawnOpinionBubbles());
 
         oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
+        storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
     }
 
@@ -98,48 +108,101 @@ public class RoundManager : MonoBehaviour
         switch (progressState)
         {
             case 1:
+                //situatie wordt verteld
+                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[cRound.stelling].begin + CardData.stories[cRound.stelling].question), false, null);
+                break;
+            case 2:
                 //players fill in their answers----------------
 
                 //personal mode is activated
                 inPersonalAnswerMode = true;
 
-                storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
-
-                stellingObject.gameObject.SetActive(false);
                 personalStellingText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
                 dialogueObject.SetActive(false);
                 PersonToAnswer();
+                nextButton.SetActive(false);
                 break;
-            case 2:
+            case 3:
                 //ober talks and shows bubbles of opinions--------
 
                 //hide personal answer screen
                 personalAnswerScreen.SetActive(false);
+                nextButton.SetActive(true);
+
 
                 //show ober
                 oberObject.SetActive(true);
 
                 //next dialogue with callback
-                dialogueManager.StartDialogue(DialogueData.AfterAnswers, true, () => SetTimerAndScreenReady());
-                break;
-            case 3:
-                //hide final answer screen
-                allAnswerScreen.SetActive(false);
-                hideBubbles();
-
-                //show ober
-                oberObject.SetActive(true);
-
-                //after final round
-                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(DialogueData.getRandomAnswerResponse() + CardData.stories[cRound.stelling].punchline + ". Wil je nog een ronde spelen?"), false, () => {
-                    chooseScreen.SetActive(true);
-                    nextButton.SetActive(false);
-                });
-
+                dialogueManager.StartDialogue(DialogueData.AfterRound1, false, null);
                 break;
             case 4:
+                //show the opinions.
+                string answers = "";
+                for (int i = 0; i < cRound.answers.Count; i++)
+                {
+                    answers += SessionData.CSESSION.players[i].name + ": \n" + DialogueData.NumberToText(cRound.answers[i]) + "\n\n";
+                }
+                answers += "Gemiddelde mening: \n" + DialogueData.NumberToText(GetAverageOpinion());
+                answers += "\n\n Klik op het pijlte om naar het volgende ronde te gaan.";
+                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(answers), false, null);
+                break;
+            case 5:
+                dialogueManager.StartDialogue(DialogueData.Round2Is, false, null);
+                break;
+            case 6:
+                //spinning bottle round active
+                bottleScreen.SetActive(true);
+                nextButton.SetActive(false);
+                break;
+            case 7:
+                //after spin round text appears that explains the final round
+                bottleScreen.SetActive(false);
+                nextButton.SetActive(true);
+
+                dialogueManager.StartDialogue(DialogueData.Round3Is, false, null);
+                break;
+            case 8:
+                //team round screen
+                nextButton.SetActive(false);
+                teamScreen.SetActive(true);
+
+                //seeting random names
+                teamEensNames.text = teamOneensNames.text = "";
+                List<Player> shuffeledNames = RoundManager.Randomize(SessionData.CSESSION.players);
+                for (int i = 0; i < shuffeledNames.Count; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        teamEensNames.text += shuffeledNames[i].name + "\n\n";
+                    }
+                    else
+                    {
+                        teamOneensNames.text += shuffeledNames[i].name + "\n\n";
+                    }
+                }
+                break;
+            case 9:
+                //after round screen select screen
+                nextButton.SetActive(true);
+                teamScreen.SetActive(false);
+
+                string AverageOpinion = DialogueData.NumberToText(GetAverageOpinion());
+                string FinalOpinion = DialogueData.NumberToText(finalAnswer);
+                string resultComparedToAverage = "Wat interestant is dat jullie als gemiddelide mening " + AverageOpinion + " hebben, en jullie eindigen uiteindelijk met de mening " + FinalOpinion + " ermee endigen!";
+                string ResultDialogue = "Ik ben blij dat jullie tot een gezamelijke mening zijn uitgekomen.. " + resultComparedToAverage + ". Dit is het einde van deze ronde. Willen jullie nog een ronde spelen?";
+
+                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(ResultDialogue), false, () =>
+                {
+                    nextButton.SetActive(false);
+                    chooseScreen.SetActive(true);
+                });
+                break;
+            case 10:
+                //last text before round ends
                 chooseScreen.SetActive(false);
+                nextButton.SetActive(true);
                 dialogueManager.StartDialogue(newRound ? DialogueData.NewRoundChosen : DialogueData.EndOfSession, true, () =>
                 {
                     StartCoroutine( GoToScene(newRound ? 1 : 0));
@@ -161,10 +224,8 @@ public class RoundManager : MonoBehaviour
         personalAnswerScreen.SetActive(true);
         personText.text = SessionData.CSESSION.players[answerIndex].name;
         personalAnswerField.text = "";
+        personalAnswerSlider.value = .5f;
         Handheld.Vibrate();
-
-        //hide ober
-        oberObject.SetActive(false);
     }
 
     public void SetTimerAndScreenReady ()
@@ -198,7 +259,7 @@ public class RoundManager : MonoBehaviour
     {
         bubbleParticle.enableEmission = true;
         bubbles = new List<Bubble> { };
-        List<string> allAnswers = cRound.answers;
+        List<float> allAnswers = cRound.answers;
         //List<string> allAnswers = new List<string> { "a", "b", "c", "d", "e", "f"};
         List<int> playerIndexes = new List<int> { };
         for (int j = 0; j < allAnswers.Count; j++)
@@ -227,7 +288,7 @@ public class RoundManager : MonoBehaviour
             tmpBubble.GetComponent<Bubble>().goToPos(positions[i]);
 
             yield return new WaitForSeconds(0.01f);
-            tmpBubble.GetComponent<Bubble>().Text = allAnswers[playerIndexes[i]]; //must be later because of instantiation of the ui text :(
+            tmpBubble.GetComponent<Bubble>().Text = allAnswers[playerIndexes[i]].ToString(); //must be later because of instantiation of the ui text :(
             tmpBubble.GetComponent<Bubble>().FromPlayer = playerIndexes[i];
             tmpBubble.GetComponent<Bubble>().DisplayCrown(SessionData.HasHighestScore(playerIndexes[i]));
 
@@ -235,6 +296,21 @@ public class RoundManager : MonoBehaviour
         }
         bubbleParticle.enableEmission = false;
 
+    }
+    public void FinalAnswerDone(int val) { 
+        switch (val)
+        {
+            case 0:
+                finalAnswer = 0f;
+                break;
+            case 1:
+                finalAnswer = 1f;
+                break;
+            case 5:
+                finalAnswer = .5f;
+                break;
+        }
+        NextButtonClicked();
     }
     public void hideBubbles()
     {
@@ -258,9 +334,9 @@ public class RoundManager : MonoBehaviour
     {
         if (personalAnswerField.text == "")
         {
-            return;
+            //return;
         }
-        cRound.answers.Add(personalAnswerField.text);
+        cRound.answers.Add(personalAnswerSlider.value);
 
         answerIndex++;
         if (answerIndex < SessionData.CSESSION.players.Count)
@@ -293,6 +369,7 @@ public class RoundManager : MonoBehaviour
     public void NewRound(bool val)
     {
         newRound = val;
+        dialogueManager.InDialogue = false;
         NextButtonClicked();
     }
     public class Round
@@ -300,7 +377,7 @@ public class RoundManager : MonoBehaviour
         public int stelling;
         public CardSet cardSet;
         public string finalAnswer;
-        public List<string> answers;
+        public List<float> answers;
     }
     public class CardSet
     {
@@ -334,5 +411,15 @@ public class RoundManager : MonoBehaviour
             }
         }
         return null;
+    }
+    public float GetAverageOpinion()
+    {
+        float val = 0;
+        for (int i = 0; i < cRound.answers.Count; i++)
+        {
+            val += cRound.answers[i];
+        }
+        val /= cRound.answers.Count;
+        return val;
     }
 }

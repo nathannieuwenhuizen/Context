@@ -126,5 +126,8 @@ public class DialogueManager : MonoBehaviour {
     public bool InDialogue
     {
         get{ return inDialogue; }
+        set{ inDialogue = value;
+            StopAllCoroutines();
+                }
     }
 }
