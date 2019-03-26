@@ -73,7 +73,7 @@ public class RoundManager : MonoBehaviour
         bubbleParticle.enableEmission = false;
         audioS = GetComponent<AudioSource>();
 
-        SessionData.CSESSION = new Session();
+        //SessionData.CSESSION = new Session();
 
         //StartCoroutine(SpawnOpinionBubbles());
 
