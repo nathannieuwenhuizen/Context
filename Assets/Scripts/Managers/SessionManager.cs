@@ -42,6 +42,7 @@ public class SessionManager : MonoBehaviour
     private Session cSession;
     void Start()
     {
+        SessionData.CSESSION = null;
         cSession = new Session();
 
         nameFields = fieldNameParent.GetComponentsInChildren<InputField>();
@@ -100,8 +101,9 @@ public class SessionManager : MonoBehaviour
     public void MoveOber(bool right)
     {
         audioS.Play();
-        Debug.Log(currentPos);
         currentPos += (right ? 1 : -1);
+        Debug.Log("curentpos = " + currentPos);
+
         if (currentPos < 0)
         {
             currentPos = obers.Length - 2;
@@ -149,8 +151,10 @@ public class SessionManager : MonoBehaviour
             case 2:
                 ShowScreen(-1);
                 nextButton.SetActive(true);
+                Debug.Log("curentpos = " + currentPos);
 
                 cSession.character = currentPos;
+                Debug.Log("character = " + cSession.character);
 
                 chosenOber.SetActive(true);
                 chosenOber.GetComponent<Ober>().UpdateSprite(cSession.character);
