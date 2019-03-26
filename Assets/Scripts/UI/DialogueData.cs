@@ -46,7 +46,7 @@ public class DialogueData {
     public static DialogueStruct[] AfterRound1 = new DialogueStruct[]
     {
         new DialogueStruct(Ober, "Jullie hebben het snel ingevuld!", false),
-        new DialogueStruct(Ober, "Jullie kunnen het situatie rightsboven op het boek icoontje teruglezen", false),
+        new DialogueStruct(Ober, "Jullie kunnen het situatie rechtsboven op het boek icoontje teruglezen", false),
         new DialogueStruct(Ober, "Ik laat nu jullie anwoorden die jullie gegeven hebben weergeven op een lijst", false),
         new DialogueStruct(Ober, "Wanneer jullie andermans antwoorden hebben gelezen, gaan we verder naar de tweede ronde!", false),
     };
@@ -68,26 +68,6 @@ public class DialogueData {
         new DialogueStruct(Ober, "Jullie gaan voor jullie gekozen mening een discusie voeren en uiteindelijk gezamelijk tot een antwoord uitkomen.", false),
         new DialogueStruct(Ober, "Laten we  beginnen!", false),
     };
-
-    public static DialogueStruct[] RoundIs = new DialogueStruct[]
-    {
-        new DialogueStruct(Ober, "This is the discussion of this round.", false),
-        new DialogueStruct(Ober, "Now each of you will write their opinion in turn.", false),
-        //new DialogueStruct(Ober, "Then we'll bring all those anwsers back and you get " + SessionData.CSESSION.timePerRound + " minutes to finalize the answer of the group.", false),
-        new DialogueStruct(Ober, "Are you all ready?", false),
-    };
-    public static DialogueStruct[] AfterAnswers = new DialogueStruct[]
-    {
-        new DialogueStruct(Ober, "Now comes the answers you've filled in to the screen.", false),
-        new DialogueStruct(Ober, "When that happens, the timer will start counting", false),
-        new DialogueStruct(Ober, "Good luck!", false),
-    };
-    public static DialogueStruct[] AfterRound = new DialogueStruct[]
-        {
-        new DialogueStruct(Ober, "This is the end of this round.", false),
-        new DialogueStruct(Ober, "Would you like to play another round?", false),
-    };
-
     public static DialogueStruct[] NewRoundChosen = new DialogueStruct[]
         {
         new DialogueStruct(Ober, "Awesome!", false),

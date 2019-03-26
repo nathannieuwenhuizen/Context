@@ -10,23 +10,32 @@ public class SpinningBottle : MonoBehaviour
     private float speed = 7f;
     private float maxSpeed = 25f;
     private float cspeed = 0f;
+    private AudioSource audios;
     void Start()
     {
         rt = GetComponent<RectTransform>();
+        audios = GetComponent<AudioSource>();
     }
     private IEnumerator SlowDown()
     {
+        audios.volume = cspeed / maxSpeed * 0.2f;
         float waitTime = Random.value * 1f;
         yield return new WaitForSeconds(waitTime);
         while (cspeed > 0)
         {
             cspeed -= .1f;
+            audios.volume = cspeed / maxSpeed * 0.2f;
             yield return new WaitForFixedUpdate();
         }
+        audios.Stop();
     }
 
     public void Spin()
     {
+        if (!audios.isPlaying)
+        {
+            audios.Play();
+        }
         StopAllCoroutines();
         cspeed += speed;
         Handheld.Vibrate();

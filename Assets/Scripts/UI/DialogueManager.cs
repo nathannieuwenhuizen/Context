@@ -100,8 +100,8 @@ public class DialogueManager : MonoBehaviour {
         isWriting = true;
         mesh.text = "";
         //mesh.GetComponent<RectTransform>().position = new Vector2(mesh.GetComponent<RectTransform>().position.x, 0f);
-
         //writingSound.Play();
+
         for (int i = 0; i < line.Length; i++)
         {
             if(isWriting)

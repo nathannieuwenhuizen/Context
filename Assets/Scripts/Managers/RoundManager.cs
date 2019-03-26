@@ -73,7 +73,7 @@ public class RoundManager : MonoBehaviour
         bubbleParticle.enableEmission = false;
         audioS = GetComponent<AudioSource>();
 
-        //SessionData.CSESSION = new Session();
+        SessionData.CSESSION = new Session();
 
         //StartCoroutine(SpawnOpinionBubbles());
 
@@ -92,6 +92,7 @@ public class RoundManager : MonoBehaviour
     public void NextButtonClicked()
     {
         Debug.Log(progressState);
+        audioS.Play();
 
         if (inPersonalAnswerMode) {
             PersonAnswered();
@@ -108,7 +109,6 @@ public class RoundManager : MonoBehaviour
             return;
         }
 
-        audioS.Play();
 
         progressState++;
         switch (progressState)
@@ -223,6 +223,10 @@ public class RoundManager : MonoBehaviour
         SceneManager.LoadScene(val);
 
     }
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void PersonToAnswer()
     {
         Debug.Log("personal should be active");
@@ -231,7 +235,6 @@ public class RoundManager : MonoBehaviour
         personText.text = SessionData.CSESSION.players[answerIndex].name;
         personalAnswerField.text = "";
         personalAnswerSlider.value = .5f;
-        Handheld.Vibrate();
     }
 
     public void SetTimerAndScreenReady ()
