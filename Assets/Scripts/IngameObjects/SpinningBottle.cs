@@ -18,13 +18,13 @@ public class SpinningBottle : MonoBehaviour
     }
     private IEnumerator SlowDown()
     {
-        audios.volume = cspeed / maxSpeed * 0.2f;
+        audios.volume = cspeed / maxSpeed * 0.5f;
         float waitTime = Random.value * 1f;
         yield return new WaitForSeconds(waitTime);
         while (cspeed > 0)
         {
             cspeed -= .1f;
-            audios.volume = cspeed / maxSpeed * 0.2f;
+            audios.volume = cspeed / maxSpeed * 0.5f;
             yield return new WaitForFixedUpdate();
         }
         audios.Stop();
@@ -38,7 +38,7 @@ public class SpinningBottle : MonoBehaviour
         }
         StopAllCoroutines();
         cspeed += speed;
-        Handheld.Vibrate();
+        //Handheld.Vibrate();
 
         cspeed = Mathf.Min(cspeed, maxSpeed);
         StartCoroutine(SlowDown());

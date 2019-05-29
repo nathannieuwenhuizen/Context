@@ -13,8 +13,6 @@ public class RoundManager : MonoBehaviour
     [Header("general objects")]
     [SerializeField] GameObject nextButton;
     [SerializeField] private FadeScreen fadeScreen;
-    [SerializeField] GameObject opinionBubble;
-    private List<Bubble> bubbles;
     private AudioSource audioS;
 
     [Header("dialogue")]
@@ -53,7 +51,6 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject allAnswerScreen;
     [SerializeField] private Text allAnswersField;
     [SerializeField] private Text finallStellingText;
-    [SerializeField] private ParticleSystem bubbleParticle;
 
     private bool inFinalAnswerMode = false;
     private bool timesUp = false;
@@ -70,12 +67,9 @@ public class RoundManager : MonoBehaviour
         cRound.stelling = (int)Mathf.Floor(Random.Range(0, CardData.stories.Count));
         cRound.answers = new List<float> { };
 
-        bubbleParticle.enableEmission = false;
         audioS = GetComponent<AudioSource>();
 
-        //SessionData.CSESSION = new Session();
-
-        //StartCoroutine(SpawnOpinionBubbles());
+        SessionData.CSESSION = new Session();
 
         oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
         storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
@@ -100,7 +94,6 @@ public class RoundManager : MonoBehaviour
         }
         if (inFinalAnswerMode)
         {
-            FinalAnswered();
             return;
         }
 
@@ -151,7 +144,7 @@ public class RoundManager : MonoBehaviour
                     answers += SessionData.CSESSION.players[i].name + ": \n" + DialogueData.NumberToText(cRound.answers[i]) + "\n\n";
                 }
                 answers += "Gemiddelde mening: \n" + DialogueData.NumberToText(GetAverageOpinion());
-                answers += "\n\n Klik op het pijlte om naar het volgende ronde te gaan.";
+                answers += "\n\n";
                 dialogueManager.StartDialogue(DialogueData.getDialogueFromString(answers), false, null);
                 break;
             case 5:
@@ -196,7 +189,7 @@ public class RoundManager : MonoBehaviour
 
                 string AverageOpinion = DialogueData.NumberToText(GetAverageOpinion());
                 string FinalOpinion = DialogueData.NumberToText(finalAnswer);
-                string resultComparedToAverage = "Wat interestant is dat jullie als gemiddelide mening " + AverageOpinion + " hebben, en jullie eindigen uiteindelijk met de mening " + FinalOpinion + " ermee endigen!";
+                string resultComparedToAverage = "Wat interessant is dat jullie als gemiddelide mening " + AverageOpinion + " hebben, en jullie eindigen met de mening " + FinalOpinion + ".";
                 string ResultDialogue = "Ik ben blij dat jullie tot een gezamelijke mening zijn uitgekomen.. " + resultComparedToAverage + ". Dit is het einde van deze ronde. Willen jullie nog een ronde spelen?";
 
                 dialogueManager.StartDialogue(DialogueData.getDialogueFromString(ResultDialogue), false, () =>
@@ -237,75 +230,6 @@ public class RoundManager : MonoBehaviour
         personalAnswerSlider.value = .5f;
     }
 
-    public void SetTimerAndScreenReady ()
-    {
-        finallStellingText.text = "";
-
-        inFinalAnswerMode = true;
-
-        //set timer
-        timer.TimeCount = SessionData.CSESSION.timePerRound * 60; //min to sec
-        timer.IsRunning = true;
-        StartCoroutine(CheckTimer());
-
-        //all answers are showing
-        allAnswerScreen.SetActive(true);
-        /*
-        string allAnsers = "";
-        for (int i = 0; i < cRound.answers.Count; i++)
-        {
-            allAnsers += cRound.answers[i] + "\n";
-        }
-        allAnswersField.text = allAnsers;*/
-
-        //hide ober
-        oberObject.SetActive(false);
-        StartCoroutine(SpawnOpinionBubbles());
-
-    }
-
-    public IEnumerator SpawnOpinionBubbles()
-    {
-        bubbleParticle.enableEmission = true;
-        bubbles = new List<Bubble> { };
-        List<float> allAnswers = cRound.answers;
-        //List<string> allAnswers = new List<string> { "a", "b", "c", "d", "e", "f"};
-        List<int> playerIndexes = new List<int> { };
-        for (int j = 0; j < allAnswers.Count; j++)
-        {
-            playerIndexes.Add(j);
-        }
-        playerIndexes = RoundManager.Randomize(playerIndexes);
-
-
-        List<Vector2> positions = new List<Vector2>
-        {
-            new Vector2(-1.2f,2.5f),
-            new Vector2(1.2f,2.8f),
-            new Vector2(-1.2f,0f),
-            new Vector2(1.2f,0.3f),
-            new Vector2(-1.2f,-2.5f),
-            new Vector2(1.2f,-2.2f),
-        };
-        for (int i = 0; i < playerIndexes.Count; i++)
-        {
-            Debug.Log("index" + playerIndexes[ i]);
-
-            GameObject tmpBubble = GameObject.Instantiate(opinionBubble, new Vector2(-4f, 0), Quaternion.identity);
-
-            bubbles.Add(tmpBubble.GetComponent<Bubble>());
-            tmpBubble.GetComponent<Bubble>().goToPos(positions[i]);
-
-            yield return new WaitForSeconds(0.01f);
-            tmpBubble.GetComponent<Bubble>().Text = allAnswers[playerIndexes[i]].ToString(); //must be later because of instantiation of the ui text :(
-            tmpBubble.GetComponent<Bubble>().FromPlayer = playerIndexes[i];
-            tmpBubble.GetComponent<Bubble>().DisplayCrown(SessionData.HasHighestScore(playerIndexes[i]));
-
-            yield return new WaitForSeconds(0.5f);
-        }
-        bubbleParticle.enableEmission = false;
-
-    }
     public void FinalAnswerDone(int val) { 
         switch (val)
         {
@@ -321,14 +245,6 @@ public class RoundManager : MonoBehaviour
         }
         NextButtonClicked();
     }
-    public void hideBubbles()
-    {
-        foreach (Bubble bubble in bubbles)
-        {
-            bubble.SetActive(false);
-        }
-    }
-
     //check timer
     private IEnumerator CheckTimer()
     {
@@ -357,23 +273,6 @@ public class RoundManager : MonoBehaviour
             inPersonalAnswerMode = false;
             NextButtonClicked();
         }
-    }
-    public void FinalAnswered()
-    {
-        Bubble chosenBubble = ChosenBubble();
-        if (chosenBubble == null) { return; }
-
-        //update
-        cRound.finalAnswer = chosenBubble.Text;
-
-        //winner gets a point
-        Player winner = SessionData.CSESSION.players[chosenBubble.FromPlayer];
-        winner.score += 1;
-        SessionData.CSESSION.players[chosenBubble.FromPlayer] = winner;
-
-        inFinalAnswerMode = false;
-        NextButtonClicked();
-
     }
     public void NewRound(bool val)
     {
@@ -409,17 +308,6 @@ public class RoundManager : MonoBehaviour
             list.RemoveAt(index);
         }
         return randomizedList;
-    }
-    public Bubble ChosenBubble()
-    {
-        foreach (Bubble bubble in bubbles)
-        {
-            if (bubble.Clicked)
-            {
-                return bubble;
-            }
-        }
-        return null;
     }
     public float GetAverageOpinion()
     {

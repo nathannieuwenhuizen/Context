@@ -1,9 +1,35 @@
 ﻿using System.Collections.Generic;
 
 public static class CardData
-{ 
+{
 
-    public static string testDiscussion = "Artiesten die vrouw-onvriendelijke uitspraken doen moeten worden geboycot";
+    public static List<string> stellingen = new List<string>
+    {
+        "Websites die vreemdgaan promoten (zoals Second Love) zouden verboden moeten worden",
+        "De overheid moet “catfish” – i.e. personen die online relaties aangaan met een valse of misleidende identiteit – actief opsporen en vervolgen",
+        "De media mogen pas verhalen over seksueel misbruik publiceren als de daders veroordeeld zijn",
+        "Overal ter wereld mogen meisjes thuis blijven als hun school geen maandverband verstrekt",
+        "Alle wc’s op scholen moeten genderneutraal worden",
+        "De politie moet voor 50% uit vrouwen bestaan",
+        "Debatteren drijft mensen uit elkaar",
+        "Het drinken van alcohol tijdens de zwangerschap moet gelijk worden gesteld aan kindermishandeling",
+        "Het overdragen van een SOA moet strafbaar worden",
+        "Het WK Vrouwenvoetbal moet meer aandacht krijgen in Nederland",
+        "Je mag alleen meedoen aan missverkiezingen als je nooit plastische chirurgie hebt ondergaan",
+        "Make-up is liegen over je uiterlijk",
+        "Mannen boven de 50 zouden geen kinderen mogen krijgen",
+        "Mannen die werken met jonge kinderen moeten altijd onder toezicht staan",
+        "Mannen en vrouwen moeten de zorg van hun kinderen gelijk verdelen",
+        "Mensen die roken moeten een hogere verzekering precentage krijgen",
+        "Op elke school moet coming-out dag gevierd worden",
+        "Homoseksualiteit moet worden uitgelegd worden op de basisscholen",
+        "Aftrekken staat gelijk aan massamoord",
+        "Een relatie hebbne met een transgender van je eigen geslacht is homoseksueel",
+        "Naaktheid op TV moet genormaniseerd worden",
+        "Seksualiteit op social media moet gecensureerd worden",
+        "Afrikaanse immigranten zijn sneller geneigd naar seksueel geweld",
+
+    };
 
     public static List<Story> stories = new List<Story>
     {
@@ -13,8 +39,8 @@ public static class CardData
             "",
             ""),*/
         new Story(
-            "Een kennis van mij kwam laatst binnen en vertelde me dit zware verhaal. Hij heeft samen sex gehad met een meisje al wetend voorhand dat zij een SOA bezat. Ondanks dat hij veilig sex met haar heeft gehad ontving hij de soa en maakte dat hem WOEST tegenover haar. ",
-            "Vind je zijn reactie normaal?",
+            "Twee vrienden van mij zijn begonnen met daten. Zij had een SOA en had dit duidelijk aan hem verteld. Ondanks dat ze samen veilig seks hadden, is hij toch besmet geraakt met de SOA. Hij is heel erg boos op haar. ",
+            "Vind jij zijn reactie normaal?",
             "",
             ""),
         /*new Story(

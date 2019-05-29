@@ -30,6 +30,7 @@ public static class SessionData
 }
 public class Session
 {
+    public int player_count;
     public List<Player> players = new List<Player> { new Player("Player start"), new Player("Player middle"), new Player("Player end") }; //how many players it will be
     public int timePerRound = 60; // in sec
     public int character = 0; // the ober/waitress

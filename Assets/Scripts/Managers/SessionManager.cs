@@ -10,7 +10,6 @@ public class SessionManager : MonoBehaviour
     [Header("Player menu objects")]
     [SerializeField] private GameObject fieldNameParent;
     [SerializeField] private Dropdown amountDropDown;
-    private InputField[] nameFields;
 
     [Header("Ober menu objects")]
     [SerializeField] private Transform oberPos;
@@ -45,16 +44,8 @@ public class SessionManager : MonoBehaviour
         SessionData.CSESSION = null;
         cSession = new Session();
 
-        nameFields = fieldNameParent.GetComponentsInChildren<InputField>();
-        for (int i = 0; i < nameFields.Length; i++)
-        {
-            nameFields[i].text = "person " + (i + 1);
-        }
 
         chosenOber.SetActive(false);
-
-        UpdateNameFields();
-        amountDropDown.onValueChanged.AddListener(delegate { UpdateNameFields(); } );
 
         ShowScreen(0);
         SetupOber();
@@ -68,27 +59,13 @@ public class SessionManager : MonoBehaviour
             Instantiate(bg_music);
         }
     }
-    private void UpdateNameFields()
-    {
-        int amount = amountDropDown.value + 2;
-        for(int i = 0; i < nameFields.Length; i++)
-        {
-            nameFields[i].gameObject.SetActive(i < amount);
-        }
-    }
+
     private void ApplyNames()
     {
         cSession.players = new List<Player> { };
-        for (int i = 0; i < nameFields.Length; i++)
-        {
-            if (i < amountDropDown.value + 2)
-            {
-                cSession.players.Add(new Player(nameFields[i].text, 0));
-            } else {
-                break;
-            }
-        }
+        cSession.player_count = amountDropDown.value + 2;
     }
+
     private void SetupOber()
     {
         obers = oberPos.GetComponentsInChildren<Transform>();
