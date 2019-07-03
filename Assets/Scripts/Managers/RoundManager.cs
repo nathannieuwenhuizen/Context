@@ -59,8 +59,12 @@ public class RoundManager : MonoBehaviour
     [Header("choosing another round objects")]
     [SerializeField] private GameObject chooseScreen;
     private bool newRound;
-    
 
+    public static RoundManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         cRound = new Round();

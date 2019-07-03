@@ -28,7 +28,6 @@ public static class CardData
         "Naaktheid op TV moet genormaniseerd worden",
         "Seksualiteit op social media moet gecensureerd worden",
         "Afrikaanse immigranten zijn sneller geneigd naar seksueel geweld",
-
     };
 
     public static List<Story> stories = new List<Story>

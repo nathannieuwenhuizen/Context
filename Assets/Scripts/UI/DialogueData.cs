@@ -42,31 +42,13 @@ public class DialogueData {
         new DialogueStruct(Ober, "Kies nu een speler aan die wilt beginnen, die houdt deze mobiel vast", false),
         new DialogueStruct(Ober, "Je krijgt nu de stelling te zien", false),
     };
-    public static DialogueStruct[] AfterRound1 = new DialogueStruct[]
-    {
-        new DialogueStruct(Ober, "Jullie hebben het snel ingevuld!", false),
-        new DialogueStruct(Ober, "Klik op het boek icoontje om de situatie terug te lezen.", false),
-        new DialogueStruct(Ober, "Ik ben erg benieuwd naar jullie antwoorden!", false),
-        new DialogueStruct(Ober, "Wanneer jullie de antwoorden hebben doorgelezen, gaan we door naar de tweede ronde!", false),
-    };
     public static DialogueStruct[] Round2Is = new DialogueStruct[]
     {
-        new DialogueStruct(Ober, "Nu komt de tweede ronde! YAY!", false),
-        new DialogueStruct(Ober, "In deze ronde draaien we met de fles. Maximaal 3 keer.", false),
-        new DialogueStruct(Ober, "Wanneer deze ophoud met draaien is de aangewezen persoon aan de beurt. Zij/hij mag zijn/haar mening verdedigen. ", false),
-        new DialogueStruct(Ober, "Neem gerust de tijd.", false),
+        new DialogueStruct(Ober, "In de tweede ronde krijgen jullie weer je stellingen te zien, maar dit keer mogen de andere spelers vragen stellen over jouw mening en argumenten.", false),
+        new DialogueStruct(Ober, "Het is de bedoeling om zo veel mogelijk vragen te kunnen beantwoorden voordat de tijd op is.", false),
+        new DialogueStruct(Ober, "Als je een vraag wilt stellen, druk je op de grote witte knop", false),
     };
-    public static DialogueStruct[] Round3Is = new DialogueStruct[]
-    {
-        new DialogueStruct(Ober, "Ik hoop dat jullie interessante argumenten hebben gehoord.", false),
-        new DialogueStruct(Ober, "Nu komt de beslissende ronde.", false),
-        new DialogueStruct(Ober, "Ik ga jullie opdelen in twee teams.", false),
-        new DialogueStruct(Ober, "Een team 'Eens'.", false),
-        new DialogueStruct(Ober, "En natuurlijk...", false),
-        new DialogueStruct(Ober, "Een team 'Oneens'.", false),
-        new DialogueStruct(Ober, "Jullie gaan deze meningen verdedigen en komen samen tot een uiteindelijke conclusie.", false),
-        new DialogueStruct(Ober, "Laten we beginnen!", false),
-    };
+
     public static DialogueStruct[] NewRoundChosen = new DialogueStruct[]
         {
         new DialogueStruct(Ober, "Awesome!", false),

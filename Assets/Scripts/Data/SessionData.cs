@@ -30,10 +30,15 @@ public static class SessionData
 }
 public class Session
 {
-    public int player_count;
+    public int player_count = 2;
+    public float timeSavedAtFirstRound = 0;
+    public int points = 0;
+    public int stellingStartIndex = 0;
+    public int character = 0; // the ober/waitress
+
+    //old
     public List<Player> players = new List<Player> { new Player("Player start"), new Player("Player middle"), new Player("Player end") }; //how many players it will be
     public int timePerRound = 60; // in sec
-    public int character = 0; // the ober/waitress
 
 }
 public struct Player
