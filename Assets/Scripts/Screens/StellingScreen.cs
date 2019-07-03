@@ -19,10 +19,10 @@ public class StellingScreen : MonoBehaviour
 
     void Start()
     {
-        SessionData.CSESSION = new Session();
+        //SessionData.CSESSION = new Session();
 
-        SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
-        GetStelling();
+        //SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
+        //GetStelling();
     }
     public void NextStelling()
     {

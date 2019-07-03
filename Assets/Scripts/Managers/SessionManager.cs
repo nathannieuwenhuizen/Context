@@ -39,6 +39,7 @@ public class SessionManager : MonoBehaviour
 
     private int progressionState = 0;
     private Session cSession;
+
     void Start()
     {
         SessionData.CSESSION = null;

@@ -16,6 +16,6 @@ public class ResultScreen : MonoBehaviour
     {
         amountPersonText.text = SessionData.CSESSION.player_count.ToString();
         firstRoundText.text = SessionData.CSESSION.timeSavedAtFirstRound.ToString();
-        amountPersonText.text = SessionData.CSESSION.points.ToString();
+        secondRoundText.text = SessionData.CSESSION.points.ToString();
     }
 }

@@ -60,6 +60,14 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject chooseScreen;
     private bool newRound;
 
+
+    [Space]
+    [Header("new screens")]
+    [SerializeField] private StellingScreen stellingScreen;
+    [SerializeField] private QuestionScreen questionScreen;
+    [SerializeField] private ResultScreen resultScreen;
+
+
     public static RoundManager instance;
     private void Awake()
     {
@@ -73,8 +81,14 @@ public class RoundManager : MonoBehaviour
 
         audioS = GetComponent<AudioSource>();
 
-        SessionData.CSESSION = new Session();
-
+        if (SessionData.CSESSION == null)
+        {
+            Debug.Log("session is null");
+            SessionData.CSESSION = new Session();
+        }
+        SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
+        SessionData.CSESSION.points = 0;
+        SessionData.CSESSION.timeSavedAtFirstRound = 0;
         oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
         storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
@@ -92,14 +106,14 @@ public class RoundManager : MonoBehaviour
         Debug.Log(progressState);
         audioS.Play();
 
-        if (inPersonalAnswerMode) {
-            PersonAnswered();
-            return;
-        }
-        if (inFinalAnswerMode)
-        {
-            return;
-        }
+        //if (inPersonalAnswerMode) {
+        //    PersonAnswered();
+        //    return;
+        //}
+        //if (inFinalAnswerMode)
+        //{
+        //    return;
+        //}
 
         if (dialogueManager.InDialogue)
         {
@@ -111,100 +125,25 @@ public class RoundManager : MonoBehaviour
         switch (progressState)
         {
             case 1:
-                //situatie wordt verteld
-                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(CardData.stories[cRound.stelling].begin + CardData.stories[cRound.stelling].question), false, null);
+                nextButton.SetActive(false);
+                stellingScreen.gameObject.SetActive(true);
+                stellingScreen.GetStelling();
                 break;
             case 2:
-                //players fill in their answers----------------
-
-                //personal mode is activated
-                inPersonalAnswerMode = true;
-
-                personalStellingText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
-
-                dialogueObject.SetActive(false);
-                PersonToAnswer();
-                nextButton.SetActive(false);
-                break;
-            case 3:
-                //ober talks and shows bubbles of opinions--------
-
-                //hide personal answer screen
-                personalAnswerScreen.SetActive(false);
                 nextButton.SetActive(true);
-
-
-                //show ober
-                oberObject.SetActive(true);
-
-                //next dialogue with callback
-                dialogueManager.StartDialogue(DialogueData.AfterRound1, false, null);
-                break;
-            case 4:
-                //show the opinions.
-                string answers = "";
-                for (int i = 0; i < cRound.answers.Count; i++)
-                {
-                    answers += SessionData.CSESSION.players[i].name + ": \n" + DialogueData.NumberToText(cRound.answers[i]) + "\n\n";
-                }
-                answers += "Gemiddelde mening: \n" + DialogueData.NumberToText(GetAverageOpinion());
-                answers += "\n\n";
-                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(answers), false, null);
-                break;
-            case 5:
                 dialogueManager.StartDialogue(DialogueData.Round2Is, false, null);
                 break;
-            case 6:
-                //spinning bottle round active
-                bottleScreen.SetActive(true);
+            case 3:
                 nextButton.SetActive(false);
+                questionScreen.gameObject.SetActive(true);
+                questionScreen.GetStelling();
                 break;
-            case 7:
-                //after spin round text appears that explains the final round
-                bottleScreen.SetActive(false);
-                nextButton.SetActive(true);
-
-                dialogueManager.StartDialogue(DialogueData.Round3Is, false, null);
+            case 4:
+                resultScreen.gameObject.SetActive(true);
+                resultScreen.ShowResult();
                 break;
-            case 8:
-                //team round screen
-                nextButton.SetActive(false);
-                teamScreen.SetActive(true);
-
-                //seeting random names
-                teamEensNames.text = teamOneensNames.text = "";
-                List<Player> shuffeledNames = RoundManager.Randomize(SessionData.CSESSION.players);
-                for (int i = 0; i < shuffeledNames.Count; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        teamEensNames.text += shuffeledNames[i].name + "\n\n";
-                    }
-                    else
-                    {
-                        teamOneensNames.text += shuffeledNames[i].name + "\n\n";
-                    }
-                }
-                break;
-            case 9:
-                //after round screen select screen
-                nextButton.SetActive(true);
-                teamScreen.SetActive(false);
-
-                string AverageOpinion = DialogueData.NumberToText(GetAverageOpinion());
-                string FinalOpinion = DialogueData.NumberToText(finalAnswer);
-                string resultComparedToAverage = "Wat interessant is dat jullie als gemiddelide mening " + AverageOpinion + " hebben, en jullie eindigen met de mening " + FinalOpinion + ".";
-                string ResultDialogue = "Ik ben blij dat jullie tot een gezamelijke mening zijn uitgekomen.. " + resultComparedToAverage + ". Dit is het einde van deze ronde. Willen jullie nog een ronde spelen?";
-
-                dialogueManager.StartDialogue(DialogueData.getDialogueFromString(ResultDialogue), false, () =>
-                {
-                    nextButton.SetActive(false);
-                    chooseScreen.SetActive(true);
-                });
-                break;
-            case 10:
-                //last text before round ends
-                chooseScreen.SetActive(false);
+            case 5:
+                resultScreen.gameObject.SetActive(false);
                 nextButton.SetActive(true);
                 dialogueManager.StartDialogue(newRound ? DialogueData.NewRoundChosen : DialogueData.EndOfSession, true, () =>
                 {
