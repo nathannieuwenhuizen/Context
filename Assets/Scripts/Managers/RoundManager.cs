@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class RoundManager : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private GameObject dialogueObject;
     [SerializeField] private Text oberNameText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private Text dialogueText;
 
 
     [Header("personal answer objects")]

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class DialogueManager : MonoBehaviour {
 
     [SerializeField]
-    private TextMeshProUGUI mesh;
+    private Text mesh;
     [SerializeField]
     private GameObject UIObject;
     [SerializeField]

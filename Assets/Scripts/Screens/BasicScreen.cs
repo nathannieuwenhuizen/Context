@@ -20,6 +20,7 @@ public class BasicScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        screenWidth = Camera.main.pixelWidth * 1.5f;
         rt = GetComponent<RectTransform>();
         startPos = rt.position;
         startRot = rt.rotation;
@@ -70,6 +71,7 @@ public class BasicScreen : MonoBehaviour
             endRot = rt.rotation;
             rt.Rotate(new Vector3(0, 0, -10));
 
+            screenWidth = Camera.main.pixelWidth * 1.5f;
         }
         rt.position = startPos;
         rt.rotation = startRot;
