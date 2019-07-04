@@ -33,7 +33,7 @@ public class StellingScreen : MonoBehaviour
         if (playerIndex > SessionData.CSESSION.player_count)
         {
             RoundManager.instance.NextButtonClicked();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             return;
         }
         GetStelling();

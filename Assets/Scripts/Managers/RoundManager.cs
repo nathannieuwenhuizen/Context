@@ -83,7 +83,6 @@ public class RoundManager : MonoBehaviour
 
         if (SessionData.CSESSION == null)
         {
-            Debug.Log("session is null");
             SessionData.CSESSION = new Session();
         }
         SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
@@ -127,10 +126,12 @@ public class RoundManager : MonoBehaviour
             case 1:
                 nextButton.SetActive(false);
                 stellingScreen.gameObject.SetActive(true);
+                //stellingScreen.GetComponent<BasicScreen>().SlideIn();
                 stellingScreen.GetStelling();
                 break;
             case 2:
                 nextButton.SetActive(true);
+                stellingScreen.GetComponent<BasicScreen>().SlideOut();
                 dialogueManager.StartDialogue(DialogueData.Round2Is, false, null);
                 break;
             case 3:
@@ -139,6 +140,7 @@ public class RoundManager : MonoBehaviour
                 questionScreen.GetStelling();
                 break;
             case 4:
+                questionScreen.GetComponent<BasicScreen>().SlideOut();
                 resultScreen.gameObject.SetActive(true);
                 resultScreen.ShowResult();
                 break;

@@ -25,12 +25,10 @@ public class QuestionScreen : MonoBehaviour
         //SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
         //GetStelling();
         SessionData.CSESSION.points = 0;
-
     }
     public void NextStelling()
     {
         SessionData.CSESSION.points += QuestionPoints;
-        Debug.Log("points total = " + SessionData.CSESSION.points);
         QuestionPoints = 0;
 
         timer.TimeCount = timer.StartTime;
@@ -38,7 +36,7 @@ public class QuestionScreen : MonoBehaviour
         if (playerIndex > SessionData.CSESSION.player_count)
         {
             RoundManager.instance.NextButtonClicked();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             return;
         }
         GetStelling();
