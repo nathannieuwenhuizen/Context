@@ -130,22 +130,11 @@ public class RoundManager : MonoBehaviour
                 stellingScreen.GetStelling();
                 break;
             case 2:
-                nextButton.SetActive(true);
-                stellingScreen.GetComponent<BasicScreen>().SlideOut();
-                dialogueManager.StartDialogue(DialogueData.Round2Is, false, null);
-                break;
-            case 3:
-                nextButton.SetActive(false);
-                questionScreen.gameObject.SetActive(true);
-                questionScreen.GetStelling();
-                break;
-            case 4:
-                questionScreen.GetComponent<BasicScreen>().SlideOut();
                 resultScreen.gameObject.SetActive(true);
                 resultScreen.ShowResult();
                 break;
-            case 5:
-                resultScreen.gameObject.SetActive(false);
+            case 3:
+                resultScreen.GetComponent<BasicScreen>().SlideOut();
                 nextButton.SetActive(true);
                 dialogueManager.StartDialogue(newRound ? DialogueData.NewRoundChosen : DialogueData.EndOfSession, true, () =>
                 {

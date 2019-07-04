@@ -9,6 +9,9 @@ public class QuestionScreen : MonoBehaviour
     private int questionPoints = 0;
 
     [SerializeField]
+    private StellingScreen stellingScreen;
+
+    [SerializeField]
     private Text stellingText;
 
     [SerializeField]
@@ -29,20 +32,25 @@ public class QuestionScreen : MonoBehaviour
     public void NextStelling()
     {
         SessionData.CSESSION.points += QuestionPoints;
+        GetComponent<BasicScreen>().SlideOut();
         QuestionPoints = 0;
 
         timer.TimeCount = timer.StartTime;
         playerIndex++;
+
         if (playerIndex > SessionData.CSESSION.player_count)
         {
             RoundManager.instance.NextButtonClicked();
             //gameObject.SetActive(false);
             return;
         }
-        GetStelling();
+        stellingScreen.gameObject.SetActive(true);
+        stellingScreen.GetStelling();
+        stellingScreen.GetComponent<BasicScreen>().SlideIn();
     }
     public void GetStelling()
     {
+        GetComponent<BasicScreen>().ResetTransform();
         QuestionPoints = 0;
         playerText.text = "Speler " + playerIndex;
         stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingStartIndex + playerIndex];

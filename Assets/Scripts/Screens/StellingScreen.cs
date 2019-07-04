@@ -9,6 +9,9 @@ public class StellingScreen : MonoBehaviour
     private float timeSaved = 0;
 
     [SerializeField]
+    private QuestionScreen questionScreen;
+
+    [SerializeField]
     private Text stellingText;
 
     [SerializeField]
@@ -32,11 +35,14 @@ public class StellingScreen : MonoBehaviour
         playerIndex++;
         if (playerIndex > SessionData.CSESSION.player_count)
         {
-            RoundManager.instance.NextButtonClicked();
+            //RoundManager.instance.NextButtonClicked();
             //gameObject.SetActive(false);
-            return;
+            //return;
         }
         GetStelling();
+        gameObject.SetActive(false);
+        questionScreen.gameObject.SetActive(true);
+        questionScreen.GetStelling();
     }
     public void GetStelling()
     {

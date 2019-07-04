@@ -7,11 +7,16 @@ public class BasicScreen : MonoBehaviour
 {
     [SerializeField]
     private float slideSpeed = 2;
+
+    [SerializeField]
+    private bool slidesWhenActive = false;
+
     private RectTransform rt;
     private Vector3 startPos;
     private Quaternion startRot;
     private Quaternion endRot;
     private float screenWidth = 1000f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +28,10 @@ public class BasicScreen : MonoBehaviour
         endRot = rt.rotation;
         rt.Rotate(new Vector3(0, 0, -10));
 
-        SlideIn();
+        if (slidesWhenActive)
+        {
+            SlideIn();
+        }
     }
 
     public void SlideIn()
@@ -42,14 +50,29 @@ public class BasicScreen : MonoBehaviour
             rt.rotation = Quaternion.Slerp(rt.rotation, startRot, Time.deltaTime * slideSpeed);
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        rt.position = startPos;
-        rt.rotation = startRot;
+        ResetTransform();
     }
     public void SlideOut()
     {
-        rt.rotation = startRot;
         StopAllCoroutines();
+        ResetTransform();
         StartCoroutine(SlidingOut());
+    }
+    public void ResetTransform()
+    {
+        if (rt == null)
+        {
+            rt = GetComponent<RectTransform>();
+            startPos = rt.position;
+            startRot = rt.rotation;
+
+            rt.Rotate(new Vector3(0, 0, 10));
+            endRot = rt.rotation;
+            rt.Rotate(new Vector3(0, 0, -10));
+
+        }
+        rt.position = startPos;
+        rt.rotation = startRot;
     }
     IEnumerator SlidingOut()
     {
