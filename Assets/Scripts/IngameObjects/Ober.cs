@@ -11,8 +11,6 @@ public class Ober : MonoBehaviour
     {
         if (SessionData.CSESSION != null)
         {
-            Debug.Log("Session exists!");
-
             UpdateSprite(SessionData.CSESSION.character);
         }
     }

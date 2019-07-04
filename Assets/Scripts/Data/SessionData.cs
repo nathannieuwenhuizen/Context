@@ -34,6 +34,7 @@ public class Session
     public float timeSavedAtFirstRound = 0;
     public int points = 0;
     public int stellingStartIndex = 0;
+    public int opinionLikes = 0;
     public int character = 0; // the ober/waitress
 
     //old

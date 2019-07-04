@@ -11,11 +11,14 @@ public class ResultScreen : MonoBehaviour
     private Text firstRoundText;
     [SerializeField]
     private Text secondRoundText;
+    [SerializeField]
+    private Text likesText;
 
     public void ShowResult()
     {
         amountPersonText.text = SessionData.CSESSION.player_count.ToString();
         firstRoundText.text = SessionData.CSESSION.timeSavedAtFirstRound.ToString();
         secondRoundText.text = SessionData.CSESSION.points.ToString();
+        likesText.text = SessionData.CSESSION.opinionLikes.ToString();
     }
 }

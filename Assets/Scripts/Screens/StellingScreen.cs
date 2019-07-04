@@ -20,6 +20,9 @@ public class StellingScreen : MonoBehaviour
     [SerializeField]
     private Text playerText;
 
+    [SerializeField]
+    private Text likesText;
+    private int opinionLikes = 0;
     void Start()
     {
         //SessionData.CSESSION = new Session();
@@ -30,7 +33,9 @@ public class StellingScreen : MonoBehaviour
     public void NextStelling()
     {
         SessionData.CSESSION.timeSavedAtFirstRound += Mathf.Round(timer.TimeCount);
-        Debug.Log("time saved: " + SessionData.CSESSION.timeSavedAtFirstRound);
+        SessionData.CSESSION.opinionLikes += opinionLikes;
+        OpinionLikes = 0;
+
         timer.TimeCount = timer.StartTime;
         playerIndex++;
         if (playerIndex > SessionData.CSESSION.player_count)
@@ -49,4 +54,30 @@ public class StellingScreen : MonoBehaviour
         playerText.text = "Speler " + playerIndex;
         stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingStartIndex + playerIndex];
     }
+    public void IncreaseLike()
+    {
+        OpinionLikes++;
+    }
+
+    public void UpdateLikeText()
+    {
+        if (OpinionLikes < 2)
+        {
+            likesText.text = opinionLikes + " like";
+        }
+        else
+        {
+            likesText.text = opinionLikes + " likes";
+        }
+    }
+    public int OpinionLikes
+    {
+        get { return opinionLikes; }
+        set
+        {
+            opinionLikes = value;
+            UpdateLikeText();
+        }
+    }
+
 }

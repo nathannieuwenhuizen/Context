@@ -16,7 +16,7 @@ public static class CardData
         "Je mag alleen meedoen aan miss verkiezingen als je nooit plastische chirurgie heb ondergaan",
         "Make-up is liegen over je uiterlijk",
         "Mannen boven de 50 zouden geen kinderen mogen krijgen",
-        "Mannen die werken met jonge kinderen moeten altijd onder toezicht staan",
+        "Mannen die met jonge kinderen werken moeten altijd onder toezicht staan",
         "Mannen en vrouwen moeten de zorg van hun kinderen gelijk verdelen",
         "Mensen die roken moeten een hogere verzekering percentage krijgen",
         "Op elke school moet coming-out dag gevierd worden",
