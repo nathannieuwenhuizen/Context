@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+
 public class RoundManager : MonoBehaviour
 {
     //what the round is
@@ -19,6 +21,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private GameObject dialogueObject;
     [SerializeField] private Text oberNameText;
+    [SerializeField] private TextMeshProUGUI dialogueText;
 
 
     [Header("personal answer objects")]
@@ -31,7 +34,6 @@ public class RoundManager : MonoBehaviour
 
     [Header("Spinning bottle round")]
     [SerializeField] private GameObject bottleScreen;
-    [SerializeField] private SpinningBottle spinningBottle;
 
     [Header("Team final round")]
     [SerializeField] private GameObject teamScreen;
@@ -88,7 +90,7 @@ public class RoundManager : MonoBehaviour
         SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
         SessionData.CSESSION.points = 0;
         SessionData.CSESSION.timeSavedAtFirstRound = 0;
-        oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
+        //oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
         storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
 
@@ -125,15 +127,21 @@ public class RoundManager : MonoBehaviour
         {
             case 1:
                 nextButton.SetActive(false);
+                bottleScreen.gameObject.SetActive(true);
+                dialogueText.text = "";
+                //stellingScreen.GetComponent<BasicScreen>().SlideIn();
+                break;
+            case 2:
+                bottleScreen.GetComponent<BasicScreen>().SlideOut();
                 stellingScreen.gameObject.SetActive(true);
                 //stellingScreen.GetComponent<BasicScreen>().SlideIn();
                 stellingScreen.GetStelling();
                 break;
-            case 2:
+            case 3:
                 resultScreen.gameObject.SetActive(true);
                 resultScreen.ShowResult();
                 break;
-            case 3:
+            case 4:
                 resultScreen.GetComponent<BasicScreen>().SlideOut();
                 nextButton.SetActive(true);
                 dialogueManager.StartDialogue(newRound ? DialogueData.NewRoundChosen : DialogueData.EndOfSession, true, () =>

@@ -122,24 +122,18 @@ public class SessionManager : MonoBehaviour
             case 1:
                 ApplyNames();
                 BarTable.SetActive(true);
-                OberHeader.SetActive(true);
 
-                ShowScreen(1);
-                break;
-            case 2:
                 ShowScreen(-1);
                 nextButton.SetActive(true);
-                Debug.Log("curentpos = " + currentPos);
 
                 cSession.character = currentPos;
-                Debug.Log("character = " + cSession.character);
 
                 chosenOber.SetActive(true);
                 chosenOber.GetComponent<Ober>().UpdateSprite(cSession.character);
 
                 dialogueManager.StartDialogue(DialogueData.IntroductionHost, false, null);
                 break;
-            case 3:
+            case 2:
                 StartCoroutine( EndOfScene() );
                 break;
             default:

@@ -761,7 +761,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: -17, y: 69.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6399630207635613131
 MonoBehaviour:
@@ -880,7 +880,7 @@ RectTransform:
   m_GameObject: {fileID: 6399630207899069130}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children:
   - {fileID: 6399630207635613128}
   - {fileID: 6399630206099204299}
@@ -890,8 +890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50.3, y: -417}
-  m_SizeDelta: {x: 793.8, y: 501.5}
+  m_AnchoredPosition: {x: 50.3, y: -322}
+  m_SizeDelta: {x: 793.8, y: 627.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6399630207899069134
 MonoBehaviour:
@@ -1116,14 +1116,14 @@ RectTransform:
   m_GameObject: {fileID: 6399630207955816586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.8333333, z: 1}
   m_Children: []
   m_Father: {fileID: 6399630207635613128}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42020804, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -163.20825, y: -0.00000494992}
+  m_AnchoredPosition: {x: -163.2088, y: -0.00008968492}
   m_SizeDelta: {x: 288.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!222 &6399630207955816589
@@ -1177,6 +1177,24 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
+
+    hallo
 
 '
   m_isRightToLeft: 0
@@ -1247,12 +1265,12 @@ MonoBehaviour:
   m_margin: {x: 27.072369, y: 49.62744, z: 108.94264, w: 71.69935}
   m_textInfo:
     textComponent: {fileID: 6399630207955816590}
-    characterCount: 6
+    characterCount: 60
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 1
+    spaceCount: 10
+    wordCount: 10
     linkCount: 0
-    lineCount: 1
+    lineCount: 10
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0

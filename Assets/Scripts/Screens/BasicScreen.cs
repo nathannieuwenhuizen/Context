@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BasicScreen : MonoBehaviour
 {
     [SerializeField]
-    private float slideSpeed = 2;
+    private float slideSpeed = 5;
 
     [SerializeField]
     private bool slidesWhenActive = false;
