@@ -55,6 +55,8 @@ public class SessionManager : MonoBehaviour
         BarTable.SetActive(false);
         OberHeader.SetActive(false);
         audioS = GetComponent<AudioSource>();
+        Time.timeScale = 1;
+
         if (!GameObject.FindGameObjectWithTag("Music"))
         {
             Instantiate(bg_music);

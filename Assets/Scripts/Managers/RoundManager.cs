@@ -90,6 +90,8 @@ public class RoundManager : MonoBehaviour
         SessionData.CSESSION.points = 0;
         SessionData.CSESSION.timeSavedAtFirstRound = 0;
         SessionData.CSESSION.opinionLikes = 0;
+        Time.timeScale = 1;
+
         //oberNameText.text = SessionData.CSESSION.character == 0 ? SessionData.Melissa : SessionData.John;
         //storyText.text = CardData.stories[cRound.stelling].begin + "\n\n" + CardData.stories[cRound.stelling].question;
 
