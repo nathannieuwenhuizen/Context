@@ -28,6 +28,8 @@ public class QuestionScreen : MonoBehaviour
         //SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
         //GetStelling();
         SessionData.CSESSION.points = 0;
+        QuestionPoints = 0;
+
     }
     public void NextStelling()
     {
@@ -62,12 +64,16 @@ public class QuestionScreen : MonoBehaviour
 
     public void UpdatePointText()
     {
-        if (QuestionPoints < 2)
+        if (questionPoints <= 0)
         {
-            pointText.text = questionPoints + " punt";
+            pointText.text = "like answer";
+        }
+        else if (QuestionPoints < 2)
+        {
+            pointText.text = questionPoints + " like";
         } else
         {
-            pointText.text = questionPoints + " punten";
+            pointText.text = questionPoints + " likes";
         }
     }
     public int QuestionPoints

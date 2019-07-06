@@ -29,6 +29,7 @@ public class StellingScreen : MonoBehaviour
 
         //SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
         //GetStelling();
+        OpinionLikes = 0;
     }
     public void NextStelling()
     {
@@ -61,7 +62,11 @@ public class StellingScreen : MonoBehaviour
 
     public void UpdateLikeText()
     {
-        if (OpinionLikes < 2)
+        if (OpinionLikes <= 0)
+        {
+            likesText.text = "like opinion";
+        }
+        else if (OpinionLikes < 2)
         {
             likesText.text = opinionLikes + " like";
         }
