@@ -38,14 +38,14 @@ public class DialogueData {
     public static DialogueStruct[] Round1Is = new DialogueStruct[]
     {
         new DialogueStruct(Ober, "Iedere ronde wordt in tweeën verdeeld. In de eerste ronde mag een deelnemer zijn mening geven over de stelling die hij toegewezen heeft gekregen.", false),
-        new DialogueStruct(Ober, " In ronde twee mogen zijn groepsgenoten vragen stellen over deze mening, of de stelling in het algemeen.", false),
+        new DialogueStruct(Ober, "In ronde twee mogen zijn groepsgenoten vragen stellen over deze mening, of de stelling in het algemeen.", false),
         new DialogueStruct(Ober, "Hou wel de timer in de gaten! Er is een tijdslimiet!", false),
         new DialogueStruct(Ober, "Als je niet aan de beurt bent, luister dan goed naar de persoon die aan het woord is! Wanneer iemand aan het woord is, is het de bedoeling dat de telefoon in het midden van de tafel ligt. ", false),
         new DialogueStruct(Ober, "Wanneer jij vind dat de deelnemer die aan het woord is zijn mening goed uit, of een vraag goed beantwoord, klik dan op de “like” button op het scherm.", false),
         new DialogueStruct(Ober, "Op deze manier verzamel je punten als een groep! ", false),
         new DialogueStruct(Ober, "Dit betekend dat je binnen een ronde meerdere keren op de “like” button mag klikken, mits de deelnemer die aan het woord is meerdere goede argumenten of antwoorden heeft.", false),
         new DialogueStruct(Ober, "Aan het einde van het spel worden jullie totaal aantal punten berekend. ", false),
-        new DialogueStruct(Ober, " Het is de bedoeling dat naarmate je het spel vaker speelt dit aantal omhoog gaat omdat jullie steeds beter worden in het beargumenteren van jullie meningen! ", false),
+        new DialogueStruct(Ober, "Het is de bedoeling dat naarmate je het spel vaker speelt dit aantal omhoog gaat omdat jullie steeds beter worden in het beargumenteren van jullie meningen! ", false),
         new DialogueStruct(Ober, "Om het jullie makkelijker te maken hoeven jullie niet zelf te beslissen wie er straks begint.", false),
         new DialogueStruct(Ober, "Dat doet de tool voor jullie! Zodra de eerste deelnemer gekozen is, draaien jullie met de klok mee. Heel veel success!", false),
     };

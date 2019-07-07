@@ -162,7 +162,7 @@ public class RoundManager : MonoBehaviour
                 break;
             case 3:
                 resultScreen.gameObject.SetActive(true);
-                resultScreen.ShowResult();
+                //resultScreen.ShowResult();
                 break;
             case 4:
                 resultScreen.GetComponent<BasicScreen>().SlideOut();

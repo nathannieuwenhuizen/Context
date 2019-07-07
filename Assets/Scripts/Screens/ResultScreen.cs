@@ -32,15 +32,15 @@ public class ResultScreen : MonoBehaviour
         //secondRoundText.text = SessionData.CSESSION.points.ToString();
         //likesText.text = SessionData.CSESSION.opinionLikes.ToString();
 
-        StartCoroutine(TransitionToNumber(amountPersonText, 2));
-        StartCoroutine(TransitionToNumber(firstRoundText, 14));
-        StartCoroutine(TransitionToNumber(secondRoundText, 12));
-        StartCoroutine(TransitionToNumber(likesText, 6));
+        //StartCoroutine(TransitionToNumber(amountPersonText, 2));
+        //StartCoroutine(TransitionToNumber(firstRoundText, 14));
+        //StartCoroutine(TransitionToNumber(secondRoundText, 12));
+        //StartCoroutine(TransitionToNumber(likesText, 6));
 
-        //StartCoroutine(TransitionToNumber(amountPersonText, SessionData.CSESSION.player_count));
-        //StartCoroutine(TransitionToNumber(firstRoundText, (int)SessionData.CSESSION.timeSavedAtFirstRound));
-        //StartCoroutine(TransitionToNumber(secondRoundText, SessionData.CSESSION.points));
-        //StartCoroutine(TransitionToNumber(likesText, SessionData.CSESSION.opinionLikes));
+        StartCoroutine(TransitionToNumber(amountPersonText, SessionData.CSESSION.player_count));
+        StartCoroutine(TransitionToNumber(firstRoundText, (int)SessionData.CSESSION.timeSavedAtFirstRound));
+        StartCoroutine(TransitionToNumber(secondRoundText, SessionData.CSESSION.points));
+        StartCoroutine(TransitionToNumber(likesText, SessionData.CSESSION.opinionLikes));
     }
     IEnumerator TransitionToNumber(Text text, int val)
     {
@@ -53,7 +53,7 @@ public class ResultScreen : MonoBehaviour
         }
         text.text = val.ToString();
         text.fontSize += 10;
-        text.color = new Color(.5f, 1f, .5f);
+        //text.color = new Color(.5f, 1f, .5f);
         text.transform.GetChild(0).GetComponent<UIParticleSystem>().Play();
         yield return new WaitForSeconds(.5f);
 
