@@ -23,7 +23,7 @@ public class SpinningBottle : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         while (cspeed > 0)
         {
-            cspeed -= .1f;
+            cspeed -= .05f;
             audios.volume = cspeed / maxSpeed * 0.5f;
             yield return new WaitForFixedUpdate();
         }

@@ -45,7 +45,7 @@ public class ResultScreen : MonoBehaviour
     IEnumerator TransitionToNumber(Text text, int val)
     {
         float currentVal = 0;
-        while (currentVal < val - 0.1f)
+        while (currentVal < val - 0.5f)
         {
             currentVal = Mathf.Lerp(currentVal, val, Time.deltaTime * (50f / val));
             text.text = Mathf.Floor(currentVal).ToString();
