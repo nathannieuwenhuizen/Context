@@ -22,6 +22,10 @@ public class StellingScreen : MonoBehaviour
 
     [SerializeField]
     private Text likesText;
+
+    [SerializeField]
+    private Button startTimerButton;
+
     private int opinionLikes = 0;
     void Start()
     {
@@ -30,6 +34,8 @@ public class StellingScreen : MonoBehaviour
         //SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
         //GetStelling();
         OpinionLikes = 0;
+
+        startTimerButton.onClick.AddListener(StartTimer);
     }
     public void NextStelling()
     {
@@ -51,6 +57,10 @@ public class StellingScreen : MonoBehaviour
             return;
         }
         GetStelling();
+    }
+    public void StartTimer()
+    {
+        timer.StartTimer(SessionData.OpinionDuration);
     }
     public void GetStelling()
     {

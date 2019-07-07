@@ -6322,6 +6322,7 @@ MonoBehaviour:
   timer: {fileID: 3163428682818844254}
   playerText: {fileID: 448051690}
   likesText: {fileID: 1563438693}
+  startTimerButton: {fileID: 1572232914}
 --- !u!114 &945579237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9377,6 +9378,7 @@ MonoBehaviour:
   timer: {fileID: 1173141093}
   playerText: {fileID: 1117618668}
   pointText: {fileID: 825680309}
+  startTimerButton: {fileID: 1695088212}
 --- !u!114 &1529588216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9868,17 +9870,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3163428682818844254}
-        m_MethodName: StartTimer
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 20
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1572232912}
         m_MethodName: SetActive
         m_Mode: 6
@@ -10090,17 +10081,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1173141093}
-        m_MethodName: StartTimer
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1695088211}
         m_MethodName: SetActive
         m_Mode: 6
@@ -13718,6 +13698,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: setting_screen
       objectReference: {fileID: 0}
+    - target: {fileID: 5507818167584873335, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5507818167584873334, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13823,35 +13808,60 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5507818167919449523, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507818168255389625, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507818168255389625, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5507818167919449521, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1466425480}
-    - target: {fileID: 5507818168255389625, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507818168255389625, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+    - target: {fileID: 8642720396086350151, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507818167992947242, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+    - target: {fileID: 2233269798646451910, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081514569506334117, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865626205636356165, guid: c44cbf3ab8528bd44bfdb9dd7b197aec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c44cbf3ab8528bd44bfdb9dd7b197aec, type: 3}

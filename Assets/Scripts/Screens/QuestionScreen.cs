@@ -22,6 +22,10 @@ public class QuestionScreen : MonoBehaviour
 
     [SerializeField]
     private Text pointText;
+
+    [SerializeField]
+    private Button startTimerButton;
+
     void Start()
     {
         //SessionData.CSESSION = new Session();
@@ -29,6 +33,7 @@ public class QuestionScreen : MonoBehaviour
         //GetStelling();
         SessionData.CSESSION.points = 0;
         QuestionPoints = 0;
+        startTimerButton.onClick.AddListener(StartTimer);
 
     }
     public void NextStelling()
@@ -83,4 +88,9 @@ public class QuestionScreen : MonoBehaviour
             UpdatePointText();
         }
     }
+    public void StartTimer()
+    {
+        timer.StartTimer(SessionData.QuestionDuration);
+    }
+
 }

@@ -6,6 +6,9 @@ public static class SessionData
 {
     public static Session CSESSION;
 
+    public static float OpinionDuration = 20;
+    public static float QuestionDuration = 60;
+
     public static string Melissa = "M e l i s s a   -   3 0";
     public static string John = "J o h n   -   2 8";
     public static bool HasHighestScore(int index)
