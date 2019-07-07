@@ -15,6 +15,9 @@ public class CircleTimer : MonoBehaviour
     private Image valueImage;
     private bool isRunning = false;
 
+    private bool isBlinking = false;
+    private Color valueColor;
+
     public UnityEvent timesUp;
 
     private void Start()
@@ -23,12 +26,22 @@ public class CircleTimer : MonoBehaviour
             timesUp = new UnityEvent();
 
         timerCount = startTime;
+        valueColor = valueImage.color;
     }
     void Update()
     {
         if (timerCount > 0)
         {
             Countdown();
+            if (timerCount < startTime / 4)
+            {
+                if (!isBlinking)
+                {
+                    isBlinking = true;
+                    Debug.Log("blink start");
+                    StartCoroutine(Blinking());
+                }
+            }
         } else if (isRunning)
         {
             isRunning = false;
@@ -36,7 +49,32 @@ public class CircleTimer : MonoBehaviour
             {
                 timesUp.Invoke();
             }
-            Debug.Log("time is 0");
+        }
+    }
+    IEnumerator Blinking()
+    {
+        while(timerCount > 0)
+        {
+            float blinkSpeed = 5f;
+            float rValue = valueColor.r;
+            Debug.Log(rValue);
+            while (valueColor.g > 0)
+            {
+                valueColor.g -= Time.deltaTime * blinkSpeed;
+                valueColor.b -= Time.deltaTime * blinkSpeed;
+                valueImage.color = valueColor;
+                Debug.Log("blink up");
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            while (valueColor.g < rValue)
+            {
+                valueColor.g += Time.deltaTime * blinkSpeed;
+                valueColor.b += Time.deltaTime * blinkSpeed;
+                valueImage.color = valueColor;
+                Debug.Log("blink down");
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            yield return new WaitForSeconds(.3f);
         }
     }
 
@@ -71,10 +109,22 @@ public class CircleTimer : MonoBehaviour
     public void StartTimer(float value)
     {
         startTime = timerCount = value;
+        StopAllCoroutines();
+
+        valueColor.g = 1;
+        valueColor.b = 1;
+        valueImage.color = valueColor;
+
+        isBlinking = false;
         IsRunning = true;
     }
     public void StopTimer()
     {
+        StopAllCoroutines();
+        valueColor.g = 1;
+        valueColor.b = 1;
+        valueImage.color = valueColor;
+
         IsRunning = false;
     }
 }

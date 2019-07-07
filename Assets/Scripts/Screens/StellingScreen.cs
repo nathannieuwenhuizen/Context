@@ -39,21 +39,24 @@ public class StellingScreen : MonoBehaviour
 
         timer.TimeCount = timer.StartTime;
         playerIndex++;
+
+        gameObject.SetActive(false);
+        questionScreen.gameObject.SetActive(true);
+        questionScreen.GetStelling();
+
         if (playerIndex > SessionData.CSESSION.player_count)
         {
             //RoundManager.instance.NextButtonClicked();
             //gameObject.SetActive(false);
-            //return;
+            return;
         }
         GetStelling();
-        gameObject.SetActive(false);
-        questionScreen.gameObject.SetActive(true);
-        questionScreen.GetStelling();
     }
     public void GetStelling()
     {
         playerText.text = "Speler " + playerIndex;
-        stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingStartIndex + playerIndex];
+        //stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingStartIndex + playerIndex];
+        stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingen[playerIndex - 1]];
     }
     public void IncreaseLike()
     {

@@ -55,7 +55,7 @@ public class QuestionScreen : MonoBehaviour
         GetComponent<BasicScreen>().ResetTransform();
         QuestionPoints = 0;
         playerText.text = "Speler " + playerIndex;
-        stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingStartIndex + playerIndex];
+        stellingText.text = CardData.stellingen[SessionData.CSESSION.stellingen[playerIndex - 1]];
     }
     public void IncreasePoints()
     {

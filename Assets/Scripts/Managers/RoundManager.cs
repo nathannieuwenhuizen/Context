@@ -87,6 +87,8 @@ public class RoundManager : MonoBehaviour
             SessionData.CSESSION = new Session();
         }
         SessionData.CSESSION.stellingStartIndex = Random.Range(0, CardData.stellingen.Count - SessionData.CSESSION.player_count);
+        RandomStellingen();
+
         SessionData.CSESSION.points = 0;
         SessionData.CSESSION.timeSavedAtFirstRound = 0;
         SessionData.CSESSION.opinionLikes = 0;
@@ -98,6 +100,25 @@ public class RoundManager : MonoBehaviour
 
         StartCoroutine(FirstDialogue());
     }
+    public void RandomStellingen()
+    {
+        SessionData.CSESSION.stellingen = new List<int> { };
+        List<int> allStellingen = new List<int> { };
+        for (int i = 0; i < CardData.stellingen.Count; i++)
+        {
+            allStellingen.Add(i);
+        }
+
+        for (int i = 0; i < SessionData.CSESSION.player_count; i++)
+        {
+            int index = Random.Range(0, allStellingen.Count);
+            SessionData.CSESSION.stellingen.Add(allStellingen[index]);
+            allStellingen.Remove(index);
+        }
+        Debug.Log(SessionData.CSESSION.stellingen[0]);
+        Debug.Log(SessionData.CSESSION.stellingen[1]);
+    }
+
     public IEnumerator FirstDialogue()
     {
         yield return new WaitForSeconds(.2f);
