@@ -38,7 +38,6 @@ public class CircleTimer : MonoBehaviour
                 if (!isBlinking)
                 {
                     isBlinking = true;
-                    Debug.Log("blink start");
                     StartCoroutine(Blinking());
                 }
             }
@@ -47,6 +46,7 @@ public class CircleTimer : MonoBehaviour
             isRunning = false;
             if (timesUp != null)
             {
+                Handheld.Vibrate();
                 timesUp.Invoke();
             }
         }
@@ -57,13 +57,11 @@ public class CircleTimer : MonoBehaviour
         {
             float blinkSpeed = 5f;
             float rValue = valueColor.r;
-            Debug.Log(rValue);
             while (valueColor.g > 0)
             {
                 valueColor.g -= Time.deltaTime * blinkSpeed;
                 valueColor.b -= Time.deltaTime * blinkSpeed;
                 valueImage.color = valueColor;
-                Debug.Log("blink up");
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             while (valueColor.g < rValue)
@@ -71,7 +69,6 @@ public class CircleTimer : MonoBehaviour
                 valueColor.g += Time.deltaTime * blinkSpeed;
                 valueColor.b += Time.deltaTime * blinkSpeed;
                 valueImage.color = valueColor;
-                Debug.Log("blink down");
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             yield return new WaitForSeconds(.3f);

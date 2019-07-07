@@ -17,12 +17,15 @@ public class DialogueManager : MonoBehaviour {
     private bool inDialogue = false;
     private bool goToNextLine = false;
     [SerializeField] private GameObject button;
-
+    [SerializeField] private Image arrowIndicator;
+    private Color arrowColor;
     public delegate void CallbackDelegate();
 
     void Start()
     {
         UIObject.SetActive(false);
+        arrowColor = new Color(1, 1, 1, 0);
+        arrowIndicator.color = arrowColor;
     }
     void Update()
     {
@@ -64,15 +67,6 @@ public class DialogueManager : MonoBehaviour {
         {
             for (int i = 0; i < dialogue.Length; i++)
             {
-                if (dialogue[i].allignmentRight)
-                {
-                    //mesh.alignment = mesh.alignment =  TextAnchor.UpperRight;
-                }
-                else
-                {
-                    //dialogueText.alignment = characterText.alignment = TextAnchor.UpperLeft;
-                }
-
                 //mesh.text = dialogue[i].name;
                 StartCoroutine(WritingLine(dialogue[i].line));
                 //Debug.Log(i + " | " + (dialogue.Length - 1));
@@ -93,6 +87,10 @@ public class DialogueManager : MonoBehaviour {
         {
             callBack();
         }
+        StopCoroutine(Blinking());
+        arrowColor.a = 0;
+        arrowIndicator.color = arrowColor;
+
         UIObject.SetActive(!disapearWhenFinish);
     }
     IEnumerator WritingLine(string line)
@@ -116,6 +114,7 @@ public class DialogueManager : MonoBehaviour {
             }
         }
         isWriting = false;
+        StartCoroutine(Blinking());
     }
     public bool OverButton ()
     {
@@ -128,6 +127,36 @@ public class DialogueManager : MonoBehaviour {
         get{ return inDialogue; }
         set{ inDialogue = value;
             StopAllCoroutines();
-                }
+
+            arrowColor.a = 0;
+            arrowIndicator.color = arrowColor;
+
+        }
+    }
+
+    IEnumerator Blinking()
+    {
+        float blinkSpeed = 2.5f;
+
+        yield return new WaitForSeconds(.5f);
+        while (!isWriting && inDialogue)
+        {
+            while (arrowColor.a > 0 && (!isWriting && inDialogue))
+            {
+                arrowColor.a -= Time.deltaTime * blinkSpeed;
+                arrowIndicator.color = arrowColor;
+                yield return new WaitForSeconds(Time.deltaTime);
+
+            }
+            while (arrowColor.a < .5 && (!isWriting && inDialogue))
+            {
+                arrowColor.a += Time.deltaTime * blinkSpeed;
+                arrowIndicator.color = arrowColor;
+                yield return new WaitForSeconds(Time.deltaTime);
+                
+            }
+        }
+        arrowColor.a = 0;
+        arrowIndicator.color = arrowColor;
     }
 }
